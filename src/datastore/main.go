@@ -17,5 +17,5 @@ func main() {
 
 	e := echo.New()
 	e.Static("/", "public")
-	e.Run(":3050")
+	e.Run(":5025")
 }
