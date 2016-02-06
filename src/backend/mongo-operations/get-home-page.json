@@ -1,9 +1,0 @@
-{
-	"_collection": "pages",
-	"_operations": [{
-		"_operation": "find",
-		"_criteria": {
-			"parentPage": {}
-		}
-	}]
-}
