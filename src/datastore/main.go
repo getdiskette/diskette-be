@@ -16,6 +16,5 @@ func main() {
 	defer session.Close()
 
 	e := echo.New()
-	e.Static("/", "public")
 	e.Run(":5025")
 }
