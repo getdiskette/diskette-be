@@ -16,8 +16,8 @@ Under heavy development.
         - [ ] `DELETE /db/col?st={sessionToken}&q={query}`
 
 - 0.2.0
-    - Authorization Configuration
-        - [ ] document level access control, example:
+    - Authorization configuration
+        - [ ] Document level access control. Example:
         ```json
         {
             "blog-post": {
