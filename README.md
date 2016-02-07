@@ -37,7 +37,7 @@ Under heavy development.
 - Client API
     - [ ] Javascript
 - Authorization Configuration
-    - [ ] collection level access control, in the format:
+    - [ ] document level access control, example:
     ```json
     {
         "blog-post": {
