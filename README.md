@@ -23,8 +23,8 @@ Under heavy development.
             "blog-post": {
                 "read": true,
                 "create": "session.userId != null",
-                "update": "session.userId === doc._id || 'admin' in session.userRoles",
-                "remove": "session.userId === doc._id || 'admin' in session.userRoles"
+                "update": "session.userId === doc.authorId || 'admin' in session.userRoles",
+                "remove": "session.userId === doc.authorId || 'admin' in session.userRoles"
             }
         }
         ```
