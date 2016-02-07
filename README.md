@@ -31,7 +31,7 @@ Under heavy development.
     - [ ] onResetPassword
 - REST API
     - [ ] `GET /db/col?st={sessionToken}&q={query}`
-    - [ ] `POST /db/col/?st={sessionToken} BODY={doc}`
+    - [ ] `POST /db/col?st={sessionToken} BODY={doc}`
     - [ ] `PUT /db/col?st={sessionToken}&q={query} BODY={partialDoc}`
     - [ ] `DELETE /db/col?st={sessionToken}&q={query}`
 - Client API
