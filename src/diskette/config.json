@@ -11,7 +11,7 @@
 		"templates": {
 			"user": {
 				"onSignup": {
-					"en": "./templates/en/requestSignupConfirmation.html"
+					"en": "./templates/en/onSignup.html"
 				},
 				"onResetPassword": {
 					"en": "./templates/en/onResetPassword.html"
@@ -21,10 +21,10 @@
 	},
 	"authorization": {
 		"user": {
-			"read": "return false",
-			"create": "return false",
-			"update": "return false",
-			"remove": "return false"
+			"read": false,
+			"create": false,
+			"update": false,
+			"remove": false
 		}
 	}
 }
