@@ -22,9 +22,9 @@ Under heavy development.
         {
             "blog-post": {
                 "read": true,
-                "create": "userCtx.id != null",
-                "update": "userCtx.id === doc._id || userCtx.role === 'admin'",
-                "remove": "userCtx.id === doc._id || userCtx.role === 'admin'"
+                "create": "session.userId != null",
+                "update": "session.userId === doc._id || 'admin' in session.userRoles",
+                "remove": "session.userId === doc._id || 'admin' in session.userRoles"
             }
         }
         ```
