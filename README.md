@@ -1,6 +1,6 @@
 # Diskette
 
-MongoDB backend + REST frontend + Authentication + Authorization + Mail Notifications
+MongoDB + REST API + Authentication + Authorization + Mail Notifications
 
 ## Status
 
@@ -11,7 +11,7 @@ Under heavy development.
 - 0.1.0
     - REST API
         - [ ] `GET    /db/col?st={sessionToken}&q={query}`
-        - [ ] `POST   /db/col?st={sessionToken} BODY={doc}`
+        - [ ] `POST   /db/col?st={sessionToken}           BODY={doc}`
         - [ ] `PUT    /db/col?st={sessionToken}&q={query} BODY={partialDoc}`
         - [ ] `DELETE /db/col?st={sessionToken}&q={query}`
 
