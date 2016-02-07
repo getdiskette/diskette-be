@@ -48,7 +48,7 @@ Under heavy development.
             - [ ] `ChangeUserEmail(userId, newEmail string) error`
             - [ ] `RemoveUsers(userIds ...string) error`
             - [ ] `SuspendUsers(userIds ...string) error`
-            - [ ] `UnuspendUsers(userIds ...string) error`
+            - [ ] `UnsuspendUsers(userIds ...string) error`
             - [ ] `RemoveUnconfirmedUsers() error`
     - Mail notifications for:
         - [ ] onSignup
