@@ -54,8 +54,11 @@ Under heavy development.
         - [ ] onSignup
         - [ ] onResetPassword
 
-- 1.0.0
+- 0.4.0
     - [ ] Javascript library for usage in the browser
+
+- 1.0.0
+    - [ ] Admin webapp
 
 ## License
 
