@@ -19,10 +19,10 @@
 			}
 		}
 	},
-	"security": {
+	"authorization": {
 		"user": {
-			"create": "return false",
 			"read": "return false",
+			"create": "return false",
 			"update": "return false",
 			"remove": "return false"
 		}
