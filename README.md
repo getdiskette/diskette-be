@@ -27,8 +27,8 @@ Under heavy development.
         - [ ] `RemoveUsers(adminKey string, userIds ...string) error`
         - [ ] `RemoveUnconfirmedUsers(adminKey string) error`
 - Default mail notifications:
-    - [ ] onSignup
-    - [ ] onResetPassword
+    - [ ] onSignup
+    - [ ] onResetPassword
 - REST API
     - [ ] `GET /db/col?st={sessionToken}&q={query}`
     - [ ] `POST /db/col/?st={sessionToken} BODY={doc}`
