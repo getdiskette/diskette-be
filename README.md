@@ -48,7 +48,7 @@ Under heavy development.
             - [ ] `ChangeUserEmail(userId, newEmail string) error`
             - [ ] `RemoveUsers(adminKey string, userIds ...string) error`
             - [ ] `RemoveUnconfirmedUsers(adminKey string) error`
-    - Default mail notifications:
+    - Mail notifications for:
         - [ ] onSignup
         - [ ] onResetPassword
 
