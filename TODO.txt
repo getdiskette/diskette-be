@@ -1,0 +1,25 @@
+
+GET /db/col?st=...&q=...
+find(userCtx, db, col, queryObj)
+
+POST /db/col/?st=... {doc}
+create(userCtx, db, col, doc)
+
+PUT /db/col?st=...&q=... {partialDoc}
+update(userCtx, db, col, queryObj, partialDoc)
+
+DELETE /db/col?st=...&q=...
+remove(userCtx, db, col, queryObj)
+
+{
+    "user": {
+        "get": "function (userCtx, doc) { return userCtx.id === doc._id || userCtx.role === 'admin'; }",
+        "post": "function (userCtx, doc) { return userCtx.id === doc._id || userCtx.role === 'admin'; }",
+        "put": "function (userCtx, doc) { return userCtx.id === doc._id || userCtx.role === 'admin'; }",
+        "delete": "function (userCtx, doc) { return userCtx.id === doc._id || userCtx.role === 'admin'; }"
+    },
+    "page": {
+        "get": "function (userCtx, doc) { return userCtx.id === doc._id || userCtx.role === 'admin'; }",
+        "put": "function (userCtx, doc) { return userCtx.id === doc._id || userCtx.role === 'admin'; }"
+    }
+}

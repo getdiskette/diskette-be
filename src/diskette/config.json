@@ -1,0 +1,30 @@
+{
+	"name": "Diskette",
+	"version": "0.0.1",
+	"mail": {
+		"smtp": {
+			"host": "smtp.mailgun.org",
+			"port": 587,
+			"email": "postmaster@mysandbox.mailgun.org",
+			"password": "mypassword"
+		},
+		"templates": {
+			"user": {
+				"onSignup": {
+					"en": "./templates/en/requestSignupConfirmation.html"
+				},
+				"onResetPassword": {
+					"en": "./templates/en/onResetPassword.html"
+				}
+			}
+		}
+	},
+	"security": {
+		"user": {
+			"create": "return false",
+			"read": "return false",
+			"update": "return false",
+			"remove": "return false"
+		}
+	}
+}
