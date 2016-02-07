@@ -38,16 +38,16 @@ Under heavy development.
     - [ ] Javascript
 - Authorization Configuration
     - [ ] collection level access control, in the format:
-        ```json
-        {
-            "blog-post": {
-                "read": true,
-                "create": "userCtx.id != null",
-                "update": "userCtx.id === doc._id || userCtx.role === 'admin'",
-                "remove": "userCtx.id === doc._id || userCtx.role === 'admin'"
-            }
+    ```json
+    {
+        "blog-post": {
+            "read": true,
+            "create": "userCtx.id != null",
+            "update": "userCtx.id === doc._id || userCtx.role === 'admin'",
+            "remove": "userCtx.id === doc._id || userCtx.role === 'admin'"
         }
-        ```
+    }
+    ```
 - [ ] Javascript client library for usage in the browser and nodejs
 
 ## License
