@@ -10,9 +10,9 @@ Under heavy development.
 
 - 0.1.0
     - REST API
-        - [ ] `GET /db/col?st={sessionToken}&q={query}`
-        - [ ] `POST /db/col?st={sessionToken} BODY={doc}`
-        - [ ] `PUT /db/col?st={sessionToken}&q={query} BODY={partialDoc}`
+        - [ ] `GET    /db/col?st={sessionToken}&q={query}`
+        - [ ] `POST   /db/col?st={sessionToken} BODY={doc}`
+        - [ ] `PUT    /db/col?st={sessionToken}&q={query} BODY={partialDoc}`
         - [ ] `DELETE /db/col?st={sessionToken}&q={query}`
 
 - 0.2.0
