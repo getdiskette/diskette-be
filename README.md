@@ -46,8 +46,10 @@ Under heavy development.
             - [ ] `CreateUser(email, password, lang string) error`
             - [ ] `ChangeUserPassword(userId, newPassword string) error`
             - [ ] `ChangeUserEmail(userId, newEmail string) error`
-            - [ ] `RemoveUsers(adminKey string, userIds ...string) error`
-            - [ ] `RemoveUnconfirmedUsers(adminKey string) error`
+            - [ ] `RemoveUsers(userIds ...string) error`
+            - [ ] `SuspendUsers(userIds ...string) error`
+            - [ ] `UnuspendUsers(userIds ...string) error`
+            - [ ] `RemoveUnconfirmedUsers() error`
     - Mail notifications for:
         - [ ] onSignup
         - [ ] onResetPassword
