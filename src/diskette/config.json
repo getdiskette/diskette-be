@@ -9,12 +9,6 @@
 			}
 		},
 		"mail": {
-			"smtp": {
-				"host": "smtp.mailgun.org",
-				"port": 587,
-				"email": "postmaster@mysandbox.mailgun.org",
-				"password": "mypassword"
-			},
 			"templates": {
 				"user": {
 					"onSignup": {
@@ -24,6 +18,12 @@
 						"en": "./templates/en/onResetPassword.html"
 					}
 				}
+			},
+			"smtp": {
+				"host": "smtp.mailgun.org",
+				"port": 587,
+				"email": "postmaster@mysandbox.mailgun.org",
+				"password": "mypassword"
 			}
 		}
 	}
