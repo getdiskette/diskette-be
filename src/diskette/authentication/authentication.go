@@ -1,6 +1,10 @@
 package main
 
-import "time"
+import (
+	"time"
+
+	"diskette/vendor/labix.org/v2/mgo"
+)
 
 type UserDoc struct {
 	Id               string    `json:"_id"`
@@ -8,7 +12,7 @@ type UserDoc struct {
 	Name             string    `json:"name"`
 	Email            string    `json:"email"`
 	HashedPass       string    `json:"hashedPass"`
-	Lang             string    `json:"lang"`
+	Language         string    `json:"lang"`
 	CreatedAt        time.Time `json:"createdAt"`
 	ConfirmedAt      time.Time `json:"confirmedAt"`
 	ResetKey         string    `json:"resetKey"`
@@ -19,8 +23,20 @@ type UserDoc struct {
 	} `json:"sessions"`
 }
 
-type Session struct {
+type SessionToken struct {
 	Id        string    `json:"id"`
 	UserId    string    `json:"userId"`
 	CreatedAt time.Time `json:"createdAt"`
+}
+
+type Service interface {
+	Signup(email, password, lang string) (confirmationToken string, err error)
+}
+
+type implService struct {
+	db *mgo.Database
+}
+
+func (self implService) Signup(database, email, password, language string) (confirmationToken string, err error) {
+	return "", nil
 }
