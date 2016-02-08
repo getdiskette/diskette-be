@@ -25,6 +25,8 @@ Under heavy development.
             - [ ] `ForgotPasword(email, lang string) (resetToken string, err error)`
             - [ ] `ResetPassword(resetToken, newPassword string) error`
         - Authenticated User:
+            - [ ] `Signout(sessionToken) error`
+            - [ ] `SignoutAllSessions(sessionToken) error`
             - [ ] `ChangePassword(sessionToken, oldPassword, newPassword string) error`
             - [ ] `ChangeEmail(sessionToken, password, newEmail string) error`
         - Admin User:
@@ -33,6 +35,7 @@ Under heavy development.
             - [ ] `ChangeUserPassword(userId, newPassword string) error`
             - [ ] `ChangeUserEmail(userId, newEmail string) error`
             - [ ] `RemoveUsers(userIds ...string) error`
+            - [ ] `SignoutAllSessions(userIds ...string) error`
             - [ ] `SuspendUsers(userIds ...string) error`
             - [ ] `UnsuspendUsers(userIds ...string) error`
             - [ ] `RemoveUnconfirmedUsers() error`
@@ -50,7 +53,7 @@ Under heavy development.
             }
         }
         ```
-        
+
 - 0.4.0
     - Mail notifications for:
         - [ ] onSignup

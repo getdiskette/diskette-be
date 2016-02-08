@@ -2,7 +2,7 @@ package main
 
 import "time"
 
-type UserBuiltin struct {
+type UserDoc struct {
 	Id               string    `json:"_id"`
 	Roles            []string  `json:"roles"`
 	Name             string    `json:"name"`
@@ -14,5 +14,13 @@ type UserBuiltin struct {
 	ResetKey         string    `json:"resetKey"`
 	RequestedResetAt string    `json:"requestedResetAt"`
 	IsSuspended      bool      `json:"isSuspended"`
-	SessionKeys      []string  `json:"sessionKeys"`
+	Sessions         map[string]struct {
+		CreatedAt time.Time `json:"createdAt"`
+	} `json:"sessions"`
+}
+
+type Session struct {
+	Id        string    `json:"id"`
+	UserId    string    `json:"userId"`
+	CreatedAt time.Time `json:"createdAt"`
 }
