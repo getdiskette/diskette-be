@@ -16,20 +16,6 @@ Under heavy development.
         - [x] `DELETE /database/collection?st={sessionToken}&q={query}`
 
 - 0.2.0
-    - Authorization configuration
-        - [ ] Document level access control. Example:
-        ```json
-        {
-            "blog-post": {
-                "read": true,
-                "create": "session.userId != null",
-                "update": "session.userId === doc.authorId || 'admin' in session.userRoles",
-                "remove": "session.userId === doc.authorId || 'admin' in session.userRoles"
-            }
-        }
-        ```
-
-- 0.3.0
     - Authentication API
         - Unauthenticated User:
             - [ ] `Signup(email, password, lang string) (confirmationToken string, err error)`
@@ -50,6 +36,22 @@ Under heavy development.
             - [ ] `SuspendUsers(userIds ...string) error`
             - [ ] `UnsuspendUsers(userIds ...string) error`
             - [ ] `RemoveUnconfirmedUsers() error`
+
+- 0.3.0
+    - Authorization configuration
+        - [ ] Document level access control. Example:
+        ```json
+        {
+            "blog-post": {
+                "read": true,
+                "create": "session.userId != null",
+                "update": "session.userId === doc.authorId || 'admin' in session.userRoles",
+                "remove": "session.userId === doc.authorId || 'admin' in session.userRoles"
+            }
+        }
+        ```
+        
+- 0.4.0
     - Mail notifications for:
         - [ ] onSignup
         - [ ] onResetPassword
