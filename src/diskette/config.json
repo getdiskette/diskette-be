@@ -11,12 +11,8 @@
 		"mail": {
 			"templates": {
 				"user": {
-					"onSignup": {
-						"en": "./templates/en/onSignup.html"
-					},
-					"onResetPassword": {
-						"en": "./templates/en/onResetPassword.html"
-					}
+					"onSignup": "./templates/user/onSignup.en.txt",
+					"onResetPassword": "./templates/user/onResetPassword.en.txt"
 				}
 			},
 			"smtp": {

@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"log"
 	"net/http"
 
@@ -21,9 +22,41 @@ func main() {
 	// 	return nil
 	// })
 
-	e.Post("/:database/:collection/insert", func(c *echo.Context) error {
+	// GET /db/col?st={sessionToken}&q={query}
+	// examples:
+	// http localhost:5025/test/user
+	// http localhost:5025/test/user?q='{"name":"dfreire"}'
+	// http localhost:5025/test/user?q='{"name":{"$ne":"dfreire"}}'
+	e.Get("/:database/:collection", func(c *echo.Context) error {
 		database := c.Param("database")
 		collection := c.Param("collection")
+		// sessionToken := c.Query("st")
+
+		var query map[string]interface{}
+		queryStr := c.Query("q")
+		if queryStr != "" {
+			if err := json.Unmarshal([]byte(queryStr), &query); err != nil {
+				return c.JSON(http.StatusInternalServerError, createErrorResponse(err.Error()))
+			}
+		}
+
+		var documents []interface{}
+		err := session.DB(database).C(collection).Find(query).All(&documents)
+		if err != nil {
+			return c.JSON(http.StatusInternalServerError, createErrorResponse(err.Error()))
+		}
+
+		return c.JSON(http.StatusOK, createOkResponse(documents))
+	})
+
+	// POST /db/col?st={sessionToken} BODY={doc}
+	// examples:
+	// http POST localhost:5025/test/user name=dfreire email=dario.freire@gmail.com
+	e.Post("/:database/:collection", func(c *echo.Context) error {
+		database := c.Param("database")
+		collection := c.Param("collection")
+		// sessionToken := c.Query("st")
+
 		var document map[string]interface{}
 		c.Bind(&document)
 
@@ -35,21 +68,34 @@ func main() {
 		return c.JSON(http.StatusOK, createOkResponse(document))
 	})
 
-	e.Get("/:database/:collection/find", func(c *echo.Context) error {
+	// PUT /db/col?st={sessionToken}&q={query} BODY={partialDoc}
+	// examples:
+	// http PUT localhost:5025/test/user?q='{"name":"dfreire"}' \$set:='{"name":"dariofreire"}'
+	e.Put("/:database/:collection", func(c *echo.Context) error {
 		database := c.Param("database")
 		collection := c.Param("collection")
+		// sessionToken := c.Query("st")
 
-		query := c.Request().URL.Query()
-		log.Printf("query: %+v", query)
+		queryStr := c.Query("q")
+		var query map[string]interface{}
+		if queryStr != "" {
+			if err := json.Unmarshal([]byte(queryStr), &query); err != nil {
+				return c.JSON(http.StatusInternalServerError, createErrorResponse(err.Error()))
+			}
+		}
 
-		var documents []interface{}
-		err := session.DB(database).C(collection).Find(query).All(&documents)
+		var partialDoc map[string]interface{}
+		c.Bind(&partialDoc)
+
+		_, err := session.DB(database).C(collection).UpdateAll(query, partialDoc)
 		if err != nil {
 			return c.JSON(http.StatusInternalServerError, createErrorResponse(err.Error()))
 		}
 
-		return c.JSON(http.StatusOK, createOkResponse(documents))
+		return c.JSON(http.StatusOK, createOkResponse(partialDoc))
 	})
+
+	// DELETE /db/col?st={sessionToken}&q={query}
 
 	e.Run(":5025")
 }

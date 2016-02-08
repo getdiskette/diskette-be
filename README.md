@@ -10,10 +10,10 @@ Under heavy development.
 
 - 0.1.0
     - REST API
-        - [ ] `GET    /db/col?st={sessionToken}&q={query}`
-        - [ ] `POST   /db/col?st={sessionToken}           BODY={doc}`
-        - [ ] `PUT    /db/col?st={sessionToken}&q={query} BODY={partialDoc}`
-        - [ ] `DELETE /db/col?st={sessionToken}&q={query}`
+        - [x] `GET    /database/collection?st={sessionToken}&q={query}`
+        - [x] `POST   /database/collection?st={sessionToken}           BODY={document}`
+        - [x] `PUT    /database/collection?st={sessionToken}&q={query} BODY={partialDocument}`
+        - [ ] `DELETE /database/collection?st={sessionToken}&q={query}`
 
 - 0.2.0
     - Authorization configuration
@@ -54,11 +54,12 @@ Under heavy development.
         - [ ] onSignup
         - [ ] onResetPassword
 
-- 0.4.0
+- 1.0.0
     - [ ] Javascript library for usage in the browser
 
-- 1.0.0
+- 2.0.0
     - [ ] Admin webapp
+    - [ ] Form generator
 
 ## License
 

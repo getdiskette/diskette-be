@@ -2,7 +2,7 @@ package main
 
 import "time"
 
-type User struct {
+type UserBuiltin struct {
 	Id               string    `json:"_id"`
 	Roles            []string  `json:"roles"`
 	Name             string    `json:"name"`
