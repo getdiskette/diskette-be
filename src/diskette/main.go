@@ -36,14 +36,14 @@ func main() {
 		queryStr := c.Query("q")
 		if queryStr != "" {
 			if err := json.Unmarshal([]byte(queryStr), &query); err != nil {
-				return c.JSON(http.StatusInternalServerError, createErrorResponse(err.Error()))
+				return c.JSON(http.StatusInternalServerError, err.Error())
 			}
 		}
 
 		var documents []interface{}
 		err := session.DB(database).C(collection).Find(query).All(&documents)
 		if err != nil {
-			return c.JSON(http.StatusInternalServerError, createErrorResponse(err.Error()))
+			return c.JSON(http.StatusInternalServerError, err.Error())
 		}
 
 		return c.JSON(http.StatusOK, createOkResponse(documents))
@@ -62,7 +62,7 @@ func main() {
 
 		err := session.DB(database).C(collection).Insert(document)
 		if err != nil {
-			return c.JSON(http.StatusInternalServerError, createErrorResponse(err.Error()))
+			return c.JSON(http.StatusInternalServerError, err.Error())
 		}
 
 		return c.JSON(http.StatusOK, createOkResponse(document))
@@ -80,7 +80,7 @@ func main() {
 		var query map[string]interface{}
 		if queryStr != "" {
 			if err := json.Unmarshal([]byte(queryStr), &query); err != nil {
-				return c.JSON(http.StatusInternalServerError, createErrorResponse(err.Error()))
+				return c.JSON(http.StatusInternalServerError, err.Error())
 			}
 		}
 
@@ -89,7 +89,7 @@ func main() {
 
 		_, err := session.DB(database).C(collection).UpdateAll(query, partialDoc)
 		if err != nil {
-			return c.JSON(http.StatusInternalServerError, createErrorResponse(err.Error()))
+			return c.JSON(http.StatusInternalServerError, err.Error())
 		}
 
 		return c.JSON(http.StatusOK, createOkResponse(partialDoc))
@@ -107,13 +107,13 @@ func main() {
 		var query map[string]interface{}
 		if queryStr != "" {
 			if err := json.Unmarshal([]byte(queryStr), &query); err != nil {
-				return c.JSON(http.StatusInternalServerError, createErrorResponse(err.Error()))
+				return c.JSON(http.StatusInternalServerError, err.Error())
 			}
 		}
 
 		_, err := session.DB(database).C(collection).RemoveAll(query)
 		if err != nil {
-			return c.JSON(http.StatusInternalServerError, createErrorResponse(err.Error()))
+			return c.JSON(http.StatusInternalServerError, err.Error())
 		}
 
 		return c.JSON(http.StatusOK, createOkResponse(nil))
@@ -125,13 +125,8 @@ func main() {
 func createOkResponse(data interface{}) map[string]interface{} {
 	m := make(map[string]interface{})
 	m["ok"] = true
-	m["data"] = data
-	return m
-}
-
-func createErrorResponse(error string) map[string]interface{} {
-	m := make(map[string]interface{})
-	m["ok"] = false
-	m["error"] = error
+	if data != nil {
+		m["data"] = data
+	}
 	return m
 }
