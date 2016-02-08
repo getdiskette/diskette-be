@@ -1,4 +1,4 @@
-package main
+package user
 
 import (
 	"time"
@@ -23,20 +23,14 @@ type UserDoc struct {
 	} `json:"sessions"`
 }
 
-type SessionToken struct {
-	Id        string    `json:"id"`
-	UserId    string    `json:"userId"`
-	CreatedAt time.Time `json:"createdAt"`
-}
-
-type Service interface {
+type UserService interface {
 	Signup(email, password, lang string) (confirmationToken string, err error)
 }
 
-type implService struct {
+type impl struct {
 	db *mgo.Database
 }
 
-func (self implService) Signup(database, email, password, language string) (confirmationToken string, err error) {
+func (self impl) Signup(email, password, language string) (confirmationToken string, err error) {
 	return "", nil
 }
