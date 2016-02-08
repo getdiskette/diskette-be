@@ -96,6 +96,28 @@ func main() {
 	})
 
 	// DELETE /db/col?st={sessionToken}&q={query}
+	// examples:
+	// http DELETE localhost:5025/test/user?q='{"name":"dfreire"}'
+	e.Delete("/:database/:collection", func(c *echo.Context) error {
+		database := c.Param("database")
+		collection := c.Param("collection")
+		// sessionToken := c.Query("st")
+
+		queryStr := c.Query("q")
+		var query map[string]interface{}
+		if queryStr != "" {
+			if err := json.Unmarshal([]byte(queryStr), &query); err != nil {
+				return c.JSON(http.StatusInternalServerError, createErrorResponse(err.Error()))
+			}
+		}
+
+		_, err := session.DB(database).C(collection).RemoveAll(query)
+		if err != nil {
+			return c.JSON(http.StatusInternalServerError, createErrorResponse(err.Error()))
+		}
+
+		return c.JSON(http.StatusOK, createOkResponse(nil))
+	})
 
 	e.Run(":5025")
 }

@@ -13,7 +13,7 @@ Under heavy development.
         - [x] `GET    /database/collection?st={sessionToken}&q={query}`
         - [x] `POST   /database/collection?st={sessionToken}           BODY={document}`
         - [x] `PUT    /database/collection?st={sessionToken}&q={query} BODY={partialDocument}`
-        - [ ] `DELETE /database/collection?st={sessionToken}&q={query}`
+        - [x] `DELETE /database/collection?st={sessionToken}&q={query}`
 
 - 0.2.0
     - Authorization configuration
