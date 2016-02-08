@@ -10,10 +10,10 @@ Under heavy development.
 
 - 0.1.0
     - REST API
-        - [x] `GET    /database/collection?st={sessionToken}&q={query}`
-        - [x] `POST   /database/collection?st={sessionToken}           BODY={document}`
-        - [x] `PUT    /database/collection?st={sessionToken}&q={query} BODY={partialDocument}`
-        - [x] `DELETE /database/collection?st={sessionToken}&q={query}`
+        - [x] `GET    /collection?st={sessionToken}&q={query}`
+        - [x] `POST   /collection?st={sessionToken}           BODY={document}`
+        - [x] `PUT    /collection?st={sessionToken}&q={query} BODY={partialDocument}`
+        - [x] `DELETE /collection?st={sessionToken}&q={query}`
 
 - 0.2.0
     - Authentication API
