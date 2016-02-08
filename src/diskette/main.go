@@ -7,9 +7,8 @@ import (
 
 	"diskette/rest"
 
-	"diskette/vendor/labix.org/v2/mgo"
-
 	"github.com/labstack/echo"
+	"labix.org/v2/mgo"
 )
 
 type Config struct {

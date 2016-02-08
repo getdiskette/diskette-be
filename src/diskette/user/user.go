@@ -3,7 +3,8 @@ package user
 import (
 	"time"
 
-	"diskette/vendor/labix.org/v2/mgo"
+	"golang.org/x/crypto/bcrypt"
+	"labix.org/v2/mgo"
 )
 
 type UserDoc struct {
@@ -23,14 +24,27 @@ type UserDoc struct {
 	} `json:"sessions"`
 }
 
-type UserService interface {
+type Service interface {
 	Signup(email, password, lang string) (confirmationToken string, err error)
 }
 
-type impl struct {
+type serviceImpl struct {
 	db *mgo.Database
 }
 
-func (self impl) Signup(email, password, language string) (confirmationToken string, err error) {
-	return "", nil
+func (self serviceImpl) Signup(email, password, language string) (confirmationToken string, err error) {
+	confirmationKey, err := self.createUser(email, password, lang, false)
+	if err != nil {
+		return
+	}
+
+}
+
+func (self authImpl) createUser(email, password, lang string, isConfirmed bool) (confirmationKey string, err error) {
+	hashedPass, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
+	if err != nil {
+		return
+	}
+
+	return
 }

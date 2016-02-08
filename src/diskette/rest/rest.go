@@ -4,8 +4,8 @@ import (
 	"encoding/json"
 	"net/http"
 
-	"diskette/vendor/github.com/labstack/echo"
-	"diskette/vendor/labix.org/v2/mgo"
+	"github.com/labstack/echo"
+	"labix.org/v2/mgo"
 )
 
 type Rest interface {
