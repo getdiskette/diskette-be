@@ -17,6 +17,7 @@ const USER_COLLECTION = "user"
 
 type UserService interface {
 	Signup(c *echo.Context) error
+	ConfirmSignup(c *echo.Context) error
 }
 
 type impl struct {
@@ -28,8 +29,7 @@ func NewUserService(db *mgo.Database, jwtKey []byte) UserService {
 	return &impl{db, jwtKey}
 }
 
-// POST /user/signup BODY={doc}
-// examples:
+// Example:
 // http POST localhost:5025/user/signup name="Joe Doe" email=joe.doe@gmail.com password=abc language=en
 func (self impl) Signup(c *echo.Context) error {
 	var request struct {
@@ -56,15 +56,15 @@ func (self impl) Signup(c *echo.Context) error {
 		return c.JSON(http.StatusBadRequest, util.CreateErrResponse(errors.New("Error: Missing parameter 'language'")))
 	}
 
-	confirmationTokenStr, err := self.createUser(request.Name, request.Email, request.Password, request.Language, false)
+	tokenStr, err := self.createUser(request.Name, request.Email, request.Password, request.Language, false)
 	if err != nil {
 		return c.JSON(http.StatusConflict, util.CreateErrResponse(err))
 	}
 
-	return c.JSON(http.StatusOK, util.CreateOkResponse(confirmationTokenStr))
+	return c.JSON(http.StatusOK, util.CreateOkResponse(tokenStr))
 }
 
-func (self impl) createUser(name, email, password, language string, isConfirmed bool) (confirmationTokenStr string, err error) {
+func (self impl) createUser(name, email, password, language string, isConfirmed bool) (tokenStr string, err error) {
 	count, err := self.db.C(USER_COLLECTION).Find(bson.M{"email": email}).Count()
 	if err != nil {
 		return
@@ -94,13 +94,13 @@ func (self impl) createUser(name, email, password, language string, isConfirmed 
 	} else {
 		userDoc.ConfirmationKey = uuid.NewV4().String()
 
-		confirmationToken := privateConfirmationToken{
+		token := confirmationToken{
 			database: self.db.Name,
 			key:      userDoc.ConfirmationKey,
 			language: userDoc.Language,
 		}
 
-		confirmationTokenStr, err = confirmationToken.toString(self.jwtKey)
+		tokenStr, err = token.toString(self.jwtKey)
 		if err != nil {
 			return
 		}
@@ -108,4 +108,26 @@ func (self impl) createUser(name, email, password, language string, isConfirmed 
 
 	err = self.db.C(USER_COLLECTION).Insert(userDoc)
 	return
+}
+
+// http POST localhost:5025/user/confirm token=<confirmation_token>
+func (self impl) ConfirmSignup(c *echo.Context) error {
+	var request struct {
+		Token string `json:"token"`
+	}
+	c.Bind(&request)
+
+	token, err := parseConfirmationToken(self.jwtKey, request.Token)
+	if err != nil {
+		return c.JSON(http.StatusForbidden, util.CreateErrResponse(err))
+	}
+
+	return self.db.C(USER_COLLECTION).Update(
+		bson.M{"confirmationKey": token.key},
+		bson.M{
+			"$set": bson.M{
+				"confirmedAt": time.Now(),
+			},
+		},
+	)
 }

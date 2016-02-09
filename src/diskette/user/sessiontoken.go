@@ -13,26 +13,26 @@ type SessionToken struct {
 }
 
 func (self SessionToken) toString(jwtKey []byte) (string, error) {
-	token := jwt.New(jwt.SigningMethodHS256)
-	token.Claims["id"] = self.Id
-	token.Claims["userId"] = self.UserId
-	token.Claims["createdAt"] = self.CreatedAt.Unix()
-	return token.SignedString(jwtKey)
+	jwtToken := jwt.New(jwt.SigningMethodHS256)
+	jwtToken.Claims["id"] = self.Id
+	jwtToken.Claims["userId"] = self.UserId
+	jwtToken.Claims["createdAt"] = self.CreatedAt.Unix()
+	return jwtToken.SignedString(jwtKey)
 }
 
-func parseSessionToken(jwtKey []byte, sessionTokenStr string) (sessionToken SessionToken, err error) {
-	token, err := jwt.Parse(sessionTokenStr, func(token *jwt.Token) (interface{}, error) {
+func parseSessionToken(jwtKey []byte, tokenStr string) (token SessionToken, err error) {
+	jwtToken, err := jwt.Parse(tokenStr, func(jwtToken *jwt.Token) (interface{}, error) {
 		return []byte(jwtKey), nil
 	})
 	if err != nil {
 		return
 	}
-	if !token.Valid {
+	if !jwtToken.Valid {
 		return
 	}
 
-	sessionToken.Id = token.Claims["id"].(string)
-	sessionToken.UserId = token.Claims["userId"].(string)
-	sessionToken.CreatedAt = time.Unix(int64(token.Claims["createdAt"].(float64)), 0)
+	token.Id = jwtToken.Claims["id"].(string)
+	token.UserId = jwtToken.Claims["userId"].(string)
+	token.CreatedAt = time.Unix(int64(jwtToken.Claims["createdAt"].(float64)), 0)
 	return
 }

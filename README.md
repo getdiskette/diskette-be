@@ -12,7 +12,7 @@ Under heavy development.
     - REST API
         - [x] GET
         ```bash
-        # get all documents from collection
+        # get all documents from a collection
         http localhost:5025/<mongodb_collection>
         # example:
         http localhost:5025/user
@@ -50,12 +50,18 @@ Under heavy development.
 - 0.2.0
     - Authentication API
         - Unauthenticated User:
-            - [x] Signup
+            - [x] signup
             ```bash
             # example
             http POST localhost:5025/user/signup \
                 name="Joe Doe" email=joe.doe@gmail.com password=abc language=en
             ```
+
+            - [x] confirm signup
+            ```bash
+            http POST localhost:5025/user/confirm token=<confirmation_token>
+            ```
+            
             - [ ] `ConfirmSignup(confirmationToken string) error`
             - [ ] `ResendConfirmationMail(email, lang string) (confirmationToken string, err error)`
             - [ ] `Signin(email, password string) (sessionToken string, err error)`

@@ -41,6 +41,7 @@ func main() {
 	e.Delete("/:collection", restService.Delete)
 
 	e.Post("/user/signup", userService.Signup)
+	e.Post("/user/confirm", userService.ConfirmSignup)
 
 	fmt.Println("Listening at http://localhost:5025")
 	e.Run(":5025")
