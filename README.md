@@ -12,14 +12,13 @@ Under heavy development.
     - REST API
         - [x] `GET    /collection?st={sessionToken}&q={query}`
         - [x] `POST   /collection?st={sessionToken}           BODY={document}`
-        - [x] `PUT    /collection?st={sessionToken}&q={query} BODY={partialDocument}`
+        - [x] `PUT    /collection?st={sessionToken}&q={query} BODY={updateDocument}`
         - [x] `DELETE /collection?st={sessionToken}&q={query}`
 
 - 0.2.0
     - Authentication API
         - Unauthenticated User:
-            - [x] `POST /user/signup`
-            `{"name": "Joe Doe", "email": "joe.doe@gmail.com", "password": "abc", "language: "en"}`
+            - [x] `POST /user/signup BODY={"name": "Joe Doe", "email": "joe.doe@gmail.com", "password": "abc", "language: "en"}`
             - [ ] `Signup(email, password, lang string) (confirmationToken string, err error)`
             - [ ] `ConfirmSignup(confirmationToken string) error`
             - [ ] `ResendConfirmationMail(email, lang string) (confirmationToken string, err error)`
