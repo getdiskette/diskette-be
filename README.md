@@ -10,17 +10,41 @@ Under heavy development.
 
 - 0.1.0
     - REST API
-        - Get documents
+        - [x] Get documents
         ```bash
         # get all documents from collection
         http localhost:5025/<mongodb_collection>
+        # example:
+        http localhost:5025/user
         # get the documents that match a query
-        http localhost:5025/<mongodb_collection>?q='<mongodb_query>'
+        http localhost:5025/<mongodb_collection>?q='<mongodb_json_query>'
+        # examples:
+        http localhost:5025/user?q='{"name":"Joe Doe"}'
+        http localhost:5025/user?q='{"name":{"$ne":"Joe Doe"}}'
         ```
-        - [x] `GET    /collection?st={sessionToken}&q={query}`
-        - [x] `POST   /collection?st={sessionToken}           BODY={document}`
-        - [x] `PUT    /collection?st={sessionToken}&q={query} BODY={updateDocument}`
-        - [x] `DELETE /collection?st={sessionToken}&q={query}`
+
+        - [x] Create a new document
+        ```bash
+        http POST localhost:5025/<mongodb_collection> <mongodb_document>
+        # example:
+        http POST localhost:5025/user name="Joe Doe" email=joe.doe@gmail.com
+        ```
+
+        - [x] Update one or more documents
+        ```bash
+        # update the documents that match a query
+        http PUT localhost:5025/<mongodb_collection>?q='<mongodb_json_query>' <mongodb_update>
+        # example:
+        http PUT localhost:5025/user?q='{"name":"Joe Doe"}' \$set:='{"email":"jdoe@gmail.com"}'
+        ```
+
+        - [x] Delete documents
+        ```bash
+        # delete the documents that match a query
+        http DELETE localhost:5025/<mongodb_collection>?q='<mongodb_json_query>'
+        # example
+        http DELETE localhost:5025/user?q='{"name":"Joe Doe"}'
+        ```
 
 - 0.2.0
     - Authentication API
