@@ -19,7 +19,6 @@ Under heavy development.
     - Authentication API
         - Unauthenticated User:
             - [x] `POST /user/signup BODY={"name": "Joe Doe", "email": "joe.doe@gmail.com", "password": "abc", "language: "en"}`
-            - [ ] `Signup(email, password, lang string) (confirmationToken string, err error)`
             - [ ] `ConfirmSignup(confirmationToken string) error`
             - [ ] `ResendConfirmationMail(email, lang string) (confirmationToken string, err error)`
             - [ ] `Signin(email, password string) (sessionToken string, err error)`

@@ -32,30 +32,31 @@ func NewUserService(db *mgo.Database, jwtKey []byte) UserService {
 // examples:
 // http POST localhost:5025/user/signup name=dfreire email=dario.freire@gmail.com password=abc123 language=en
 func (self impl) Signup(c *echo.Context) error {
-	var params map[string]interface{}
-	c.Bind(&params)
+	var request struct {
+		Name     string `json:"name"`
+		Email    string `json:"email"`
+		Password string `json:"password"`
+		Language string `json:"language"`
+	}
+	c.Bind(&request)
 
-	name, ok := params["name"].(string)
-	if !ok {
+	if request.Name == "" {
 		return c.JSON(http.StatusBadRequest, util.CreateErrResponse(errors.New("Error: Missing parameter 'name'")))
 	}
 
-	email, ok := params["email"].(string)
-	if !ok {
+	if request.Email == "" {
 		return c.JSON(http.StatusBadRequest, util.CreateErrResponse(errors.New("Error: Missing parameter 'email'")))
 	}
 
-	password, ok := params["password"].(string)
-	if !ok {
+	if request.Password == "" {
 		return c.JSON(http.StatusBadRequest, util.CreateErrResponse(errors.New("Error: Missing parameter 'password'")))
 	}
 
-	language, ok := params["language"].(string)
-	if !ok {
+	if request.Language == "" {
 		return c.JSON(http.StatusBadRequest, util.CreateErrResponse(errors.New("Error: Missing parameter 'language'")))
 	}
 
-	confirmationTokenStr, err := self.createUser(name, email, password, language, false)
+	confirmationTokenStr, err := self.createUser(request.Name, request.Email, request.Password, request.Language, false)
 	if err != nil {
 		return c.JSON(http.StatusConflict, util.CreateErrResponse(err))
 	}
