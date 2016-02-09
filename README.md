@@ -61,10 +61,13 @@ Under heavy development.
             ```bash
             http POST localhost:5025/user/confirm token=<confirmation_token>
             ```
-            
-            - [ ] `ConfirmSignup(confirmationToken string) error`
-            - [ ] `ResendConfirmationMail(email, lang string) (confirmationToken string, err error)`
-            - [ ] `Signin(email, password string) (sessionToken string, err error)`
+
+            - [x] signin
+            ```bash
+            # example
+            http POST localhost:5025/user/signin email=joe.doe@gmail.com password=abc
+            ```
+
             - [ ] `ForgotPasword(email, lang string) (resetToken string, err error)`
             - [ ] `ResetPassword(resetToken, newPassword string) error`
         - Authenticated User:

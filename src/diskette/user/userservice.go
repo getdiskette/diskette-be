@@ -18,6 +18,7 @@ const USER_COLLECTION = "user"
 type UserService interface {
 	Signup(c *echo.Context) error
 	ConfirmSignup(c *echo.Context) error
+	Signin(c *echo.Context) error
 }
 
 type impl struct {
@@ -61,7 +62,7 @@ func (self impl) Signup(c *echo.Context) error {
 		return c.JSON(http.StatusConflict, util.CreateErrResponse(err))
 	}
 
-	return c.JSON(http.StatusOK, util.CreateOkResponse(tokenStr))
+	return c.JSON(http.StatusOK, util.CreateOkResponse(bson.M{"confirmationToken": tokenStr}))
 }
 
 func (self impl) createUser(name, email, password, language string, isConfirmed bool) (tokenStr string, err error) {
@@ -130,4 +131,44 @@ func (self impl) ConfirmSignup(c *echo.Context) error {
 			},
 		},
 	)
+}
+
+// http POST localhost:5025/user/signin email=joe.doe@gmail.com password=abc
+func (self impl) Signin(c *echo.Context) error {
+	var request struct {
+		Email    string `json:"email"`
+		Password string `json:"password"`
+	}
+	c.Bind(&request)
+
+	var userDoc UserDoc
+	err := self.db.C(USER_COLLECTION).Find(bson.M{"email": request.Email}).One(&userDoc)
+	if err != nil {
+		return c.JSON(http.StatusUnauthorized, util.CreateErrResponse(errors.New("The user doesn't exist.")))
+	}
+
+	if userDoc.ConfirmedAt.Before(userDoc.CreatedAt) {
+		return c.JSON(http.StatusUnauthorized, util.CreateErrResponse(errors.New("The user has not confirmed the account.")))
+	}
+
+	if userDoc.IsSuspended {
+		return c.JSON(http.StatusUnauthorized, util.CreateErrResponse(errors.New("The user is suspended.")))
+	}
+
+	if err = bcrypt.CompareHashAndPassword([]byte(userDoc.HashedPass), []byte(request.Password)); err != nil {
+		return c.JSON(http.StatusUnauthorized, util.CreateErrResponse(errors.New("The password didn't match.")))
+	}
+
+	token := SessionToken{
+		Id:        uuid.NewV4().String(),
+		UserId:    userDoc.Id.Hex(),
+		CreatedAt: time.Now(),
+	}
+
+	tokenStr, err := token.toString(self.jwtKey)
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, util.CreateErrResponse(err))
+	}
+
+	return c.JSON(http.StatusOK, util.CreateOkResponse(bson.M{"sessionToken": tokenStr}))
 }
