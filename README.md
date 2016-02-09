@@ -10,7 +10,7 @@ Under heavy development.
 
 - 0.1.0
     - REST API
-        - [x] Get documents
+        - [x] GET
         ```bash
         # get all documents from collection
         http localhost:5025/<mongodb_collection>
@@ -23,14 +23,15 @@ Under heavy development.
         http localhost:5025/user?q='{"name":{"$ne":"Joe Doe"}}'
         ```
 
-        - [x] Create a new document
+        - [x] POST
         ```bash
+        # create a new document
         http POST localhost:5025/<mongodb_collection> <mongodb_document>
         # example:
         http POST localhost:5025/user name="Joe Doe" email=joe.doe@gmail.com
         ```
 
-        - [x] Update one or more documents
+        - [x] PUT
         ```bash
         # update the documents that match a query
         http PUT localhost:5025/<mongodb_collection>?q='<mongodb_json_query>' <mongodb_update>
@@ -38,7 +39,7 @@ Under heavy development.
         http PUT localhost:5025/user?q='{"name":"Joe Doe"}' \$set:='{"email":"jdoe@gmail.com"}'
         ```
 
-        - [x] Delete documents
+        - [x] DELETE
         ```bash
         # delete the documents that match a query
         http DELETE localhost:5025/<mongodb_collection>?q='<mongodb_json_query>'
@@ -50,7 +51,8 @@ Under heavy development.
     - Authentication API
         - Unauthenticated User:
             - [x] Signup
-            ```
+            ```bash
+            # example
             http POST localhost:5025/user/signup \
                 name="Joe Doe" email=joe.doe@gmail.com password=abc language=en
             ```
