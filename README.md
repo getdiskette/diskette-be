@@ -10,6 +10,13 @@ Under heavy development.
 
 - 0.1.0
     - REST API
+        - Get documents
+        ```bash
+        # get all documents from collection
+        http localhost:5025/<mongodb_collection>
+        # get the documents that match a query
+        http localhost:5025/<mongodb_collection>?q='<mongodb_query>'
+        ```
         - [x] `GET    /collection?st={sessionToken}&q={query}`
         - [x] `POST   /collection?st={sessionToken}           BODY={document}`
         - [x] `PUT    /collection?st={sessionToken}&q={query} BODY={updateDocument}`
