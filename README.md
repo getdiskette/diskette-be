@@ -20,7 +20,8 @@ Under heavy development.
         - Unauthenticated User:
             - [x] Signup
             ```
-            http POST localhost:5025/user/signup name="Joe Doe" email=joe.doe@gmail.com password=abc language=en
+            http POST localhost:5025/user/signup \
+                name="Joe Doe" email=joe.doe@gmail.com password=abc language=en
             ```
             - [ ] `ConfirmSignup(confirmationToken string) error`
             - [ ] `ResendConfirmationMail(email, lang string) (confirmationToken string, err error)`
