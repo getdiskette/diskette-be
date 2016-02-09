@@ -30,7 +30,7 @@ func NewUserService(db *mgo.Database, jwtKey []byte) UserService {
 
 // POST /user/signup BODY={doc}
 // examples:
-// http POST localhost:5025/user/signup name=dfreire email=dario.freire@gmail.com password=abc123 language=en
+// http POST localhost:5025/user/signup name="Joe Doe" email=joe.doe@gmail.com password=abc language=en
 func (self impl) Signup(c *echo.Context) error {
 	var request struct {
 		Name     string `json:"name"`
