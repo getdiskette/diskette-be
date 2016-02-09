@@ -3,6 +3,7 @@ package rest
 import (
 	"diskette/util"
 	"encoding/json"
+	"errors"
 	"net/http"
 
 	"github.com/labstack/echo"
@@ -76,11 +77,16 @@ func (self *impl) Put(c *echo.Context) error {
 	// sessionToken := c.Query("st")
 
 	queryStr := c.Query("q")
+	if queryStr == "" {
+		// it is not safe to proceed if the query parameter is not present
+		// because requests like http PUT localhost:5025/<collection>
+		// would modify all documents of the collection
+		return c.JSON(http.StatusForbidden, util.CreateErrResponse(errors.New("Error: Missing parameter 'q' (for query)")))
+	}
+
 	var query map[string]interface{}
-	if queryStr != "" {
-		if err := json.Unmarshal([]byte(queryStr), &query); err != nil {
-			return c.JSON(http.StatusInternalServerError, util.CreateErrResponse(err))
-		}
+	if err := json.Unmarshal([]byte(queryStr), &query); err != nil {
+		return c.JSON(http.StatusInternalServerError, util.CreateErrResponse(err))
 	}
 
 	var partialDoc map[string]interface{}
@@ -102,11 +108,16 @@ func (self *impl) Delete(c *echo.Context) error {
 	// sessionToken := c.Query("st")
 
 	queryStr := c.Query("q")
+	if queryStr == "" {
+		// it is not safe to proceed if the query parameter is not present
+		// because requests like http DELETE localhost:5025/<collection>
+		// would delete all documents of the collection
+		return c.JSON(http.StatusForbidden, util.CreateErrResponse(errors.New("Error: Missing parameter 'q' (for query)")))
+	}
+
 	var query map[string]interface{}
-	if queryStr != "" {
-		if err := json.Unmarshal([]byte(queryStr), &query); err != nil {
-			return c.JSON(http.StatusInternalServerError, util.CreateErrResponse(err))
-		}
+	if err := json.Unmarshal([]byte(queryStr), &query); err != nil {
+		return c.JSON(http.StatusInternalServerError, util.CreateErrResponse(err))
 	}
 
 	_, err := self.db.C(collection).RemoveAll(query)
