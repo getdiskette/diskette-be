@@ -2,10 +2,12 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
 	"io/ioutil"
 	"log"
 
 	"diskette/rest"
+	"diskette/user"
 
 	"github.com/labstack/echo"
 	"labix.org/v2/mgo"
@@ -24,16 +26,23 @@ func main() {
 
 	db := session.DB(config.Database)
 
-	rest := rest.NewRest(db)
+	restService := rest.NewRestService(db)
+	userService := user.NewUserService(db, []byte(config.JwtKey))
 
 	e := echo.New()
+
 	// e.Use(func(c *echo.Context) error {
 	// 	return nil
 	// })
-	e.Get("/:collection", rest.Get)
-	e.Post("/:collection", rest.Post)
-	e.Put("/:collection", rest.Put)
-	e.Delete("/:collection", rest.Delete)
+
+	e.Get("/:collection", restService.Get)
+	e.Post("/:collection", restService.Post)
+	e.Put("/:collection", restService.Put)
+	e.Delete("/:collection", restService.Delete)
+
+	e.Post("/user/signup", userService.Signup)
+
+	fmt.Println("Listening at http://localhost:5025")
 	e.Run(":5025")
 }
 

@@ -1,6 +1,7 @@
 package rest
 
 import (
+	"diskette/util"
 	"encoding/json"
 	"net/http"
 
@@ -8,7 +9,7 @@ import (
 	"labix.org/v2/mgo"
 )
 
-type Rest interface {
+type RestService interface {
 	Get(c *echo.Context) error
 	Post(c *echo.Context) error
 	Put(c *echo.Context) error
@@ -19,7 +20,7 @@ type impl struct {
 	db *mgo.Database
 }
 
-func NewRest(db *mgo.Database) Rest {
+func NewRestService(db *mgo.Database) RestService {
 	return &impl{db}
 }
 
@@ -36,17 +37,17 @@ func (self *impl) Get(c *echo.Context) error {
 	queryStr := c.Query("q")
 	if queryStr != "" {
 		if err := json.Unmarshal([]byte(queryStr), &query); err != nil {
-			return c.JSON(http.StatusInternalServerError, err.Error())
+			return c.JSON(http.StatusInternalServerError, util.CreateErrResponse(err))
 		}
 	}
 
 	var documents []interface{}
 	err := self.db.C(collection).Find(query).All(&documents)
 	if err != nil {
-		return c.JSON(http.StatusInternalServerError, err.Error())
+		return c.JSON(http.StatusInternalServerError, util.CreateErrResponse(err))
 	}
 
-	return c.JSON(http.StatusOK, createOkResponse(documents))
+	return c.JSON(http.StatusOK, util.CreateOkResponse(documents))
 }
 
 // POST /collection?st={sessionToken} BODY={doc}
@@ -61,10 +62,10 @@ func (self *impl) Post(c *echo.Context) error {
 
 	err := self.db.C(collection).Insert(document)
 	if err != nil {
-		return c.JSON(http.StatusInternalServerError, err.Error())
+		return c.JSON(http.StatusInternalServerError, util.CreateErrResponse(err))
 	}
 
-	return c.JSON(http.StatusOK, createOkResponse(document))
+	return c.JSON(http.StatusOK, util.CreateOkResponse(document))
 }
 
 // PUT /collection?st={sessionToken}&q={query} BODY={partialDoc}
@@ -78,7 +79,7 @@ func (self *impl) Put(c *echo.Context) error {
 	var query map[string]interface{}
 	if queryStr != "" {
 		if err := json.Unmarshal([]byte(queryStr), &query); err != nil {
-			return c.JSON(http.StatusInternalServerError, err.Error())
+			return c.JSON(http.StatusInternalServerError, util.CreateErrResponse(err))
 		}
 	}
 
@@ -87,10 +88,10 @@ func (self *impl) Put(c *echo.Context) error {
 
 	_, err := self.db.C(collection).UpdateAll(query, partialDoc)
 	if err != nil {
-		return c.JSON(http.StatusInternalServerError, err.Error())
+		return c.JSON(http.StatusInternalServerError, util.CreateErrResponse(err))
 	}
 
-	return c.JSON(http.StatusOK, createOkResponse(partialDoc))
+	return c.JSON(http.StatusOK, util.CreateOkResponse(partialDoc))
 }
 
 // DELETE /collection?st={sessionToken}&q={query}
@@ -104,23 +105,14 @@ func (self *impl) Delete(c *echo.Context) error {
 	var query map[string]interface{}
 	if queryStr != "" {
 		if err := json.Unmarshal([]byte(queryStr), &query); err != nil {
-			return c.JSON(http.StatusInternalServerError, err.Error())
+			return c.JSON(http.StatusInternalServerError, util.CreateErrResponse(err))
 		}
 	}
 
 	_, err := self.db.C(collection).RemoveAll(query)
 	if err != nil {
-		return c.JSON(http.StatusInternalServerError, err.Error())
+		return c.JSON(http.StatusInternalServerError, util.CreateErrResponse(err))
 	}
 
-	return c.JSON(http.StatusOK, createOkResponse(nil))
-}
-
-func createOkResponse(data interface{}) map[string]interface{} {
-	m := make(map[string]interface{})
-	m["ok"] = true
-	if data != nil {
-		m["data"] = data
-	}
-	return m
+	return c.JSON(http.StatusOK, util.CreateOkResponse(nil))
 }

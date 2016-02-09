@@ -3,7 +3,7 @@
 	"jwtKey": "e3a6cfcf-fd98-4f91-b04b-5b4074e5fd90",
 	"authorization": {
 		"user": {
-			"read": false,
+			"read":   false,
 			"create": false,
 			"update": false,
 			"remove": false
