@@ -75,7 +75,7 @@ Under heavy development.
     - [ ] `GetUsers() ([]User, error)`
     - [ ] `CreateUser(email, password, lang string) error`
     - [ ] `ChangeUserPassword(userId, newPassword string) error`
-    - [ ] `ChangeUserEmail(userId, newEmail string) error`
+    - [ ] `UpdateUserProfile(userId, newName, newEmail string) error`
     - [ ] `RemoveUsers(userIds ...string) error`
     - [ ] `Signout(userIds ...string) error`
     - [ ] `SuspendUsers(userIds ...string) error`
