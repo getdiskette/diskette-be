@@ -8,7 +8,7 @@ Under heavy development.
 
 ## Roadmap
 
-- [x] REST API
+- [x] REST
 
     - [x] GET
     ```bash
@@ -47,7 +47,7 @@ Under heavy development.
     http DELETE localhost:5025/user?q='{"name":"Joe Doe"}'
     ```
 
-- [ ] Authentication API
+- [ ] Authentication
 
     - [x] sign up
     ```bash
@@ -82,7 +82,7 @@ Under heavy development.
     - [ ] `ChangePassword(sessionToken, oldPassword, newPassword string) error`
     - [ ] `UpdateProfile(sessionToken, password, newName string, newEmail string) error`
 
-- [ ] User Management API
+- [ ] User Management
     - [ ] `GetUsers() ([]User, error)`
     - [ ] `CreateUser(email, password, lang string) error`
     - [ ] `ChangeUserPassword(userId, newPassword string) error`
@@ -94,7 +94,7 @@ Under heavy development.
     - [ ] `RemoveUnconfirmedUsers() error`
     - [ ] `RemoveExpiredResetKeys() error`
 
-- [ ] Authorization configuration
+- [ ] Authorization
     - [ ] Document level access control
     ```json
     // example
