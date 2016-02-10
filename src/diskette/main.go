@@ -44,6 +44,7 @@ func main() {
 	e.Post("/user/confirm", userService.ConfirmSignup)
 	e.Post("/user/signin", userService.Signin)
 	e.Post("/user/forgot-password", userService.ForgotPassword)
+	e.Post("/user/reset-password", userService.ResetPassword)
 
 	fmt.Println("Listening at http://localhost:5025")
 	e.Run(":5025")

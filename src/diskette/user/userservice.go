@@ -20,6 +20,7 @@ type UserService interface {
 	ConfirmSignup(c *echo.Context) error
 	Signin(c *echo.Context) error
 	ForgotPassword(c *echo.Context) error
+	ResetPassword(c *echo.Context) error
 }
 
 type impl struct {
@@ -121,7 +122,7 @@ func (self impl) ConfirmSignup(c *echo.Context) error {
 	}
 
 	token, err := parseConfirmationToken(self.jwtKey, request.Token)
-	if err != nil {
+	if err != nil || token.key == "" {
 		return c.JSON(http.StatusForbidden, util.CreateErrResponse(err))
 	}
 
@@ -200,7 +201,8 @@ func (self impl) ForgotPassword(c *echo.Context) error {
 		bson.M{"email": request.Email},
 		bson.M{
 			"$set": bson.M{
-				"resetKey": resetKey,
+				"resetKey":         resetKey,
+				"requestedResetAt": time.Now(),
 			},
 		},
 	)
@@ -215,4 +217,47 @@ func (self impl) ForgotPassword(c *echo.Context) error {
 	}
 
 	return c.JSON(http.StatusOK, util.CreateOkResponse(bson.M{"resetToken": tokenStr}))
+}
+
+// http POST localhost:5025/user/reset-passwort token=<reset_token> password=123
+func (self impl) ResetPassword(c *echo.Context) error {
+	var request struct {
+		Token    string `json:"token"`
+		Password string `json:"password"`
+	}
+	c.Bind(&request)
+
+	if request.Token == "" {
+		return c.JSON(http.StatusBadRequest, util.CreateErrResponse(errors.New("Error: Missing parameter 'token'")))
+	}
+
+	if request.Password == "" {
+		return c.JSON(http.StatusBadRequest, util.CreateErrResponse(errors.New("Error: Missing parameter 'password'")))
+	}
+
+	token, err := parseResetToken(self.jwtKey, request.Token)
+	if err != nil || token.key == "" {
+		return c.JSON(http.StatusForbidden, util.CreateErrResponse(err))
+	}
+
+	hashedPass, err := bcrypt.GenerateFromPassword([]byte(request.Password), bcrypt.DefaultCost)
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, util.CreateErrResponse(err))
+	}
+
+	err = self.db.C(USER_COLLECTION).Update(
+		bson.M{"resetKey": token.key},
+		bson.M{
+			"$set": bson.M{
+				"resetKey":         "",
+				"requestedResetAt": time.Unix(0, 0),
+				"hashedPass":       hashedPass,
+			},
+		},
+	)
+	if err != nil {
+		return c.JSON(http.StatusNotFound, util.CreateErrResponse(errors.New("The token doesn't exist.")))
+	}
+
+	return c.JSON(http.StatusOK, util.CreateOkResponse(nil))
 }

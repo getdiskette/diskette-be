@@ -8,114 +8,113 @@ Under heavy development.
 
 ## Roadmap
 
-- 0.1.0
-    - REST API
-        - [x] GET
-        ```bash
-        # get all documents from a collection
-        http localhost:5025/<mongodb_collection>
-        # example:
-        http localhost:5025/user
-        # get the documents that match a query
-        http localhost:5025/<mongodb_collection>?q='<mongodb_json_query>'
-        # examples:
-        http localhost:5025/user?q='{"name":"Joe Doe"}'
-        http localhost:5025/user?q='{"name":{"$ne":"Joe Doe"}}'
-        ```
+- [x] REST API
 
-        - [x] POST
-        ```bash
-        # create a new document
-        http POST localhost:5025/<mongodb_collection> <mongodb_document>
-        # example:
-        http POST localhost:5025/user name="Joe Doe" email=joe.doe@gmail.com
-        ```
+    - [x] GET
+    ```bash
+    # get all documents from a collection
+    http localhost:5025/<mongodb_collection>
+    # example:
+    http localhost:5025/user
+    # get the documents that match a query
+    http localhost:5025/<mongodb_collection>?q='<mongodb_json_query>'
+    # examples:
+    http localhost:5025/user?q='{"name":"Joe Doe"}'
+    http localhost:5025/user?q='{"name":{"$ne":"Joe Doe"}}'
+    ```
 
-        - [x] PUT
-        ```bash
-        # update the documents that match a query
-        http PUT localhost:5025/<mongodb_collection>?q='<mongodb_json_query>' <mongodb_update>
-        # example:
-        http PUT localhost:5025/user?q='{"name":"Joe Doe"}' \$set:='{"email":"jdoe@gmail.com"}'
-        ```
+    - [x] POST
+    ```bash
+    # create a new document
+    http POST localhost:5025/<mongodb_collection> <mongodb_document>
+    # example:
+    http POST localhost:5025/user name="Joe Doe" email=joe.doe@gmail.com
+    ```
 
-        - [x] DELETE
-        ```bash
-        # delete the documents that match a query
-        http DELETE localhost:5025/<mongodb_collection>?q='<mongodb_json_query>'
-        # example
-        http DELETE localhost:5025/user?q='{"name":"Joe Doe"}'
-        ```
+    - [x] PUT
+    ```bash
+    # update the documents that match a query
+    http PUT localhost:5025/<mongodb_collection>?q='<mongodb_json_query>' <mongodb_update>
+    # example:
+    http PUT localhost:5025/user?q='{"name":"Joe Doe"}' \$set:='{"email":"jdoe@gmail.com"}'
+    ```
 
-- 0.2.0
-    - Authentication API
-        - Unauthenticated User:
-            - [x] sign up
-            ```bash
-            # example
-            http POST localhost:5025/user/signup \
-                name="Joe Doe" email=joe.doe@gmail.com password=abc language=en
-            ```
+    - [x] DELETE
+    ```bash
+    # delete the documents that match a query
+    http DELETE localhost:5025/<mongodb_collection>?q='<mongodb_json_query>'
+    # example
+    http DELETE localhost:5025/user?q='{"name":"Joe Doe"}'
+    ```
 
-            - [x] confirm sign up
-            ```bash
-            http POST localhost:5025/user/confirm token=<confirmation_token>
-            ```
+- [ ] Authentication API
 
-            - [x] sign in
-            ```bash
-            # example
-            http POST localhost:5025/user/signin email=joe.doe@gmail.com password=abc
-            ```
+    - [x] sign up
+    ```bash
+    # example
+    http POST localhost:5025/user/signup name="Joe Doe" email=joe.doe@gmail.com password=abc language=en
+    ```
 
-            - [x] forgot password, request a new one
-            ```bash
-            # example
-            http POST localhost:5025/user/forgot-passwort email=joe.doe@gmail.com
-            ```
+    - [x] confirm sign up
+    ```bash
+    http POST localhost:5025/user/confirm token=<confirmation_token>
+    ```
 
-            - [ ] `ResetPassword(resetToken, newPassword string) error`
-        - Authenticated User:
-            - [ ] `Signout(sessionToken) error`
-            - [ ] `SignoutAllSessions(sessionToken) error`
-            - [ ] `ChangePassword(sessionToken, oldPassword, newPassword string) error`
-            - [ ] `ChangeEmail(sessionToken, password, newEmail string) error`
-        - Admin User:
-            - [ ] `GetUsers() ([]User, error)`
-            - [ ] `CreateUser(email, password, lang string) error`
-            - [ ] `ChangeUserPassword(userId, newPassword string) error`
-            - [ ] `ChangeUserEmail(userId, newEmail string) error`
-            - [ ] `RemoveUsers(userIds ...string) error`
-            - [ ] `SignoutAllSessions(userIds ...string) error`
-            - [ ] `SuspendUsers(userIds ...string) error`
-            - [ ] `UnsuspendUsers(userIds ...string) error`
-            - [ ] `RemoveUnconfirmedUsers() error`
+    - [x] sign in
+    ```bash
+    # example
+    http POST localhost:5025/user/signin email=joe.doe@gmail.com password=abc
+    ```
 
-- 0.3.0
-    - Authorization configuration
-        - [ ] Document level access control. Example:
-        ```json
-        {
-            "blog-post": {
-                "read": true,
-                "create": "session.userId != null",
-                "update": "session.userId === doc.authorId || 'admin' in session.userRoles",
-                "remove": "session.userId === doc.authorId || 'admin' in session.userRoles"
-            }
+    - [x] forgot password
+    ```bash
+    # example
+    http POST localhost:5025/user/forgot-password email=joe.doe@gmail.com
+    ```
+
+    - [x] reset password
+    ```bash
+    # example
+    http POST localhost:5025/user/reset-password token=<reset_token> password=123
+    ```
+
+    - [ ] `Signout(sessionToken) error`
+    - [ ] `SignoutAllSessions(sessionToken) error`
+    - [ ] `ChangePassword(sessionToken, oldPassword, newPassword string) error`
+    - [ ] `UpdateProfile(sessionToken, password, newName string, newEmail string) error`
+
+- [ ] User Management API
+    - [ ] `GetUsers() ([]User, error)`
+    - [ ] `CreateUser(email, password, lang string) error`
+    - [ ] `ChangeUserPassword(userId, newPassword string) error`
+    - [ ] `ChangeUserEmail(userId, newEmail string) error`
+    - [ ] `RemoveUsers(userIds ...string) error`
+    - [ ] `SignoutAllSessions(userIds ...string) error`
+    - [ ] `SuspendUsers(userIds ...string) error`
+    - [ ] `UnsuspendUsers(userIds ...string) error`
+    - [ ] `RemoveUnconfirmedUsers() error`
+    - [ ] `RemoveExpiredResetKeys() error`
+
+- [ ] Authorization configuration
+    - [ ] Document level access control
+    ```json
+    // example
+    {
+        "blog-post": {
+            "read": true,
+            "create": "session.userId != null",
+            "update": "session.userId === doc.authorId || 'admin' in session.userRoles",
+            "remove": "session.userId === doc.authorId || 'admin' in session.userRoles"
         }
-        ```
+    }
+    ```
 
-- 0.4.0
-    - Mail notifications for:
-        - [ ] onSignup
-        - [ ] onResetPassword
+- [ ] Mail Notifications:
+    - [ ] onSignup
+    - [ ] onResetPassword
 
-- 1.0.0
-    - [ ] Javascript library for usage in the browser
+- [ ] Javascript library for usage in the browser
 
-- 2.0.0
-    - [ ] Admin webapp
-    - [ ] Form generator
 
 ## License
 
