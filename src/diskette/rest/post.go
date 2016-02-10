@@ -1,4 +1,4 @@
-package restservice
+package rest
 
 import (
 	"diskette/util"

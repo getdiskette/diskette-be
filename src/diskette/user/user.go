@@ -1,11 +1,11 @@
-package userservice
+package user
 
 import (
 	"github.com/labstack/echo"
 	"labix.org/v2/mgo"
 )
 
-type UserService interface {
+type AuthenticationService interface {
 	// Publicly Available
 	Signup(c *echo.Context) error
 	ConfirmSignup(c *echo.Context) error
@@ -21,6 +21,6 @@ type impl struct {
 	jwtKey         []byte
 }
 
-func NewUserService(userCollection *mgo.Collection, jwtKey []byte) UserService {
+func NewAuthenticationService(userCollection *mgo.Collection, jwtKey []byte) AuthenticationService {
 	return &impl{userCollection, jwtKey}
 }

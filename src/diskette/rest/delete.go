@@ -1,4 +1,4 @@
-package restservice
+package rest
 
 import (
 	"diskette/util"
@@ -10,8 +10,8 @@ import (
 )
 
 // examples:
-// http PUT localhost:5025/user?q='{"name":"dfreire"}' \$set:='{"name":"dariofreire"}'
-func (self *impl) Put(c *echo.Context) error {
+// http DELETE localhost:5025/user?q='{"name":"dfreire"}'
+func (self *impl) Delete(c *echo.Context) error {
 	collection := c.Param("collection")
 
 	queryStr := c.Query("q")
@@ -25,13 +25,10 @@ func (self *impl) Put(c *echo.Context) error {
 		return c.JSON(http.StatusInternalServerError, util.CreateErrResponse(err))
 	}
 
-	var partialDoc map[string]interface{}
-	c.Bind(&partialDoc)
-
-	_, err := self.db.C(collection).UpdateAll(query, partialDoc)
+	_, err := self.db.C(collection).RemoveAll(query)
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, util.CreateErrResponse(err))
 	}
 
-	return c.JSON(http.StatusOK, util.CreateOkResponse(partialDoc))
+	return c.JSON(http.StatusOK, util.CreateOkResponse(nil))
 }

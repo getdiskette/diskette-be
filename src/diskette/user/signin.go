@@ -1,4 +1,4 @@
-package userservice
+package user
 
 import (
 	"diskette/collections"
@@ -13,7 +13,7 @@ import (
 	"labix.org/v2/mgo/bson"
 )
 
-// http POST localhost:5025/public/signin email=joe.doe@gmail.com password=abc
+// http POST localhost:5025/user/signin email=joe.doe@gmail.com password=abc
 func (self impl) Signin(c *echo.Context) error {
 	var request struct {
 		Email    string `json:"email"`

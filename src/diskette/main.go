@@ -8,8 +8,8 @@ import (
 
 	"diskette/collections"
 	"diskette/middleware"
-	"diskette/restservice"
-	"diskette/userservice"
+	"diskette/rest"
+	"diskette/user"
 
 	"github.com/labstack/echo"
 	"labix.org/v2/mgo"
@@ -32,13 +32,13 @@ func main() {
 
 	e := echo.New()
 
-	userService := userservice.NewUserService(userCollection, jwtKey)
-	public := e.Group("/public")
-	public.Post("/signup", userService.Signup)
-	public.Post("/confirm", userService.ConfirmSignup)
-	public.Post("/signin", userService.Signin)
-	public.Post("/forgot-password", userService.ForgotPassword)
-	public.Post("/reset-password", userService.ResetPassword)
+	userService := user.NewAuthenticationService(userCollection, jwtKey)
+	user := e.Group("/user")
+	user.Post("/signup", userService.Signup)
+	user.Post("/confirm", userService.ConfirmSignup)
+	user.Post("/signin", userService.Signin)
+	user.Post("/forgot-password", userService.ForgotPassword)
+	user.Post("/reset-password", userService.ResetPassword)
 
 	sessionMiddleware := middleware.CreateSessionMiddleware(userCollection, jwtKey)
 	private := e.Group("/private", sessionMiddleware)
@@ -46,7 +46,7 @@ func main() {
 	// private.Post("/change-password", userService.ChangePassword)
 	// private.Post("/update-profile", userService.UpdateProfile)
 
-	restService := restservice.NewRestService(db)
+	restService := rest.NewRestService(db)
 	e.Get("/:collection", restService.Get)
 	e.Post("/:collection", restService.Post)
 	e.Put("/:collection", restService.Put)

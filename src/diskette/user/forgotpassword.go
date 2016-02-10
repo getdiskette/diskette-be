@@ -1,4 +1,4 @@
-package userservice
+package user
 
 import (
 	"diskette/tokens"
@@ -13,7 +13,7 @@ import (
 	"labix.org/v2/mgo/bson"
 )
 
-// http POST localhost:5025/public/forgot-password email=joe.doe@gmail.com
+// http POST localhost:5025/user/forgot-password email=joe.doe@gmail.com
 func (self impl) ForgotPassword(c *echo.Context) error {
 	var request struct {
 		Email string `json:"email"`

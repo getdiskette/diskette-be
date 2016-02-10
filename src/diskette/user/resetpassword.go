@@ -1,4 +1,4 @@
-package userservice
+package user
 
 import (
 	"diskette/tokens"
@@ -12,7 +12,7 @@ import (
 	"labix.org/v2/mgo/bson"
 )
 
-// http POST localhost:5025/public/reset-password token=<reset_token> password=123
+// http POST localhost:5025/user/reset-password token=<reset_token> password=123
 func (self impl) ResetPassword(c *echo.Context) error {
 	var request struct {
 		Token    string `json:"token"`

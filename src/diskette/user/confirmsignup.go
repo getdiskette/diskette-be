@@ -1,4 +1,4 @@
-package userservice
+package user
 
 import (
 	"diskette/util"
@@ -12,7 +12,7 @@ import (
 	"labix.org/v2/mgo/bson"
 )
 
-// http POST localhost:5025/public/confirm token=<confirmation_token>
+// http POST localhost:5025/user/confirm token=<confirmation_token>
 func (self impl) ConfirmSignup(c *echo.Context) error {
 	var request struct {
 		Token string `json:"token"`
