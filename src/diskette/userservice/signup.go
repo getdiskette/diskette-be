@@ -8,7 +8,7 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/satori/go.uuid"
+	"diskette/vendor/github.com/satori/go.uuid"
 
 	"github.com/labstack/echo"
 	"golang.org/x/crypto/bcrypt"
@@ -60,6 +60,7 @@ func (self impl) createUser(c *echo.Context, name, email, password, language str
 	}
 
 	userDoc := collections.UserDocument{
+		Id:          bson.NewObjectId(),
 		Name:        name,
 		Email:       email,
 		HashedPass:  hashedPass,

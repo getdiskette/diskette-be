@@ -6,6 +6,7 @@ import (
 )
 
 type UserService interface {
+	// Publicly Available
 	Signup(c *echo.Context) error
 	ConfirmSignup(c *echo.Context) error
 	Signin(c *echo.Context) error

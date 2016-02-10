@@ -28,33 +28,29 @@ func main() {
 	defer mongoSession.Close()
 
 	db := mongoSession.DB(config.Database)
-
-	sessionMiddleware := middleware.CreateSessionMiddleware(db.C(collections.USER_COLLECTION_NAME), jwtKey)
-	restService := restservice.NewRestService(db)
-	userService := userservice.NewUserService(db.C(collections.USER_COLLECTION_NAME), jwtKey)
+	userCollection := db.C(collections.USER_COLLECTION_NAME)
 
 	e := echo.New()
 
-	// e.Use(func(c *echo.Context) error {
-	// 	return nil
-	// })
-
-	e.Get("/:collection", restService.Get)
-	e.Post("/:collection", restService.Post)
-	e.Put("/:collection", restService.Put)
-	e.Delete("/:collection", restService.Delete)
-
-	public := e.Group("public")
+	userService := userservice.NewUserService(userCollection, jwtKey)
+	public := e.Group("/public")
 	public.Post("/signup", userService.Signup)
 	public.Post("/confirm", userService.ConfirmSignup)
 	public.Post("/signin", userService.Signin)
 	public.Post("/forgot-password", userService.ForgotPassword)
 	public.Post("/reset-password", userService.ResetPassword)
 
-	private := e.Group("private", sessionMiddleware)
+	sessionMiddleware := middleware.CreateSessionMiddleware(userCollection, jwtKey)
+	private := e.Group("/private", sessionMiddleware)
 	private.Post("/signout", userService.Signout)
 	// private.Post("/change-password", userService.ChangePassword)
 	// private.Post("/update-profile", userService.UpdateProfile)
+
+	restService := restservice.NewRestService(db)
+	e.Get("/:collection", restService.Get)
+	e.Post("/:collection", restService.Post)
+	e.Put("/:collection", restService.Put)
+	e.Delete("/:collection", restService.Delete)
 
 	fmt.Println("Listening at http://localhost:5025")
 	e.Run(":5025")

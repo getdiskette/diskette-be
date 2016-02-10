@@ -28,7 +28,7 @@ func (self impl) ConfirmSignup(c *echo.Context) error {
 		return c.JSON(http.StatusForbidden, util.CreateErrResponse(err))
 	}
 
-	return self.userCollection.Update(
+	err = self.userCollection.Update(
 		bson.M{"confirmationKey": token.Key},
 		bson.M{
 			"$set": bson.M{
@@ -36,4 +36,10 @@ func (self impl) ConfirmSignup(c *echo.Context) error {
 			},
 		},
 	)
+
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, util.CreateErrResponse(err))
+	}
+
+	return c.JSON(http.StatusOK, util.CreateOkResponse(nil))
 }

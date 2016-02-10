@@ -3,7 +3,6 @@ package restservice
 import (
 	"diskette/util"
 	"encoding/json"
-	"log"
 	"net/http"
 
 	"github.com/labstack/echo"
@@ -15,7 +14,6 @@ import (
 // http localhost:5025/user?q='{"name":{"$ne":"dfreire"}}'
 func (self *impl) Get(c *echo.Context) error {
 	collection := c.Param("collection")
-	log.Printf("get %s", collection)
 
 	var query map[string]interface{}
 	queryStr := c.Query("q")
