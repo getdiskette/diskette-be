@@ -6,8 +6,10 @@ import (
 	"io/ioutil"
 	"log"
 
-	"diskette/rest"
-	"diskette/user"
+	"diskette/collections"
+	"diskette/middleware"
+	"diskette/restservice"
+	"diskette/userservice"
 
 	"github.com/labstack/echo"
 	"labix.org/v2/mgo"
@@ -20,14 +22,16 @@ type Config struct {
 
 func main() {
 	config := readConfig()
+	jwtKey := []byte(config.JwtKey)
 
-	session := createMongoSession()
-	defer session.Close()
+	mongoSession := createMongoSession()
+	defer mongoSession.Close()
 
-	db := session.DB(config.Database)
+	db := mongoSession.DB(config.Database)
 
-	restService := rest.NewRestService(db)
-	userService := user.NewUserService(db, []byte(config.JwtKey))
+	sessionMiddleware := middleware.CreateSessionMiddleware(db.C(collections.USER_COLLECTION_NAME), jwtKey)
+	restService := restservice.NewRestService(db)
+	userService := userservice.NewUserService(db.C(collections.USER_COLLECTION_NAME), jwtKey)
 
 	e := echo.New()
 
@@ -40,11 +44,17 @@ func main() {
 	e.Put("/:collection", restService.Put)
 	e.Delete("/:collection", restService.Delete)
 
-	e.Post("/public/signup", userService.Signup)
-	e.Post("/public/confirm", userService.ConfirmSignup)
-	e.Post("/public/signin", userService.Signin)
-	e.Post("/public/forgot-password", userService.ForgotPassword)
-	e.Post("/public/reset-password", userService.ResetPassword)
+	public := e.Group("public")
+	public.Post("/signup", userService.Signup)
+	public.Post("/confirm", userService.ConfirmSignup)
+	public.Post("/signin", userService.Signin)
+	public.Post("/forgot-password", userService.ForgotPassword)
+	public.Post("/reset-password", userService.ResetPassword)
+
+	private := e.Group("private", sessionMiddleware)
+	private.Post("/signout", userService.Signout)
+	// private.Post("/change-password", userService.ChangePassword)
+	// private.Post("/update-profile", userService.UpdateProfile)
 
 	fmt.Println("Listening at http://localhost:5025")
 	e.Run(":5025")

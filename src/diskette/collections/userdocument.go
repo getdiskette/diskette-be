@@ -1,4 +1,4 @@
-package user
+package collections
 
 import (
 	"time"
@@ -6,7 +6,9 @@ import (
 	"labix.org/v2/mgo/bson"
 )
 
-type UserDoc struct {
+const USER_COLLECTION_NAME = "user"
+
+type UserDocument struct {
 	Id                   bson.ObjectId `bson:"_id"`
 	Name                 string        `bson:"name"`
 	Email                string        `bson:"email"`
