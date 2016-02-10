@@ -12,37 +12,26 @@ Under heavy development.
 
     - [x] GET
     ```bash
-    # get all documents from a collection
-    http localhost:5025/<mongodb_collection>
-    # example:
-    http localhost:5025/user
-    # get the documents that match a query
-    http localhost:5025/<mongodb_collection>?q='<mongodb_json_query>'
     # examples:
+    http localhost:5025/user
     http localhost:5025/user?q='{"name":"Joe Doe"}'
     http localhost:5025/user?q='{"name":{"$ne":"Joe Doe"}}'
     ```
 
     - [x] POST
     ```bash
-    # create a new document
-    http POST localhost:5025/<mongodb_collection> <mongodb_document>
     # example:
     http POST localhost:5025/user name="Joe Doe" email=joe.doe@gmail.com
     ```
 
     - [x] PUT
     ```bash
-    # update the documents that match a query
-    http PUT localhost:5025/<mongodb_collection>?q='<mongodb_json_query>' <mongodb_update>
     # example:
     http PUT localhost:5025/user?q='{"name":"Joe Doe"}' \$set:='{"email":"jdoe@gmail.com"}'
     ```
 
     - [x] DELETE
     ```bash
-    # delete the documents that match a query
-    http DELETE localhost:5025/<mongodb_collection>?q='<mongodb_json_query>'
     # example
     http DELETE localhost:5025/user?q='{"name":"Joe Doe"}'
     ```
