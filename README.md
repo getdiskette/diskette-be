@@ -73,7 +73,7 @@ Under heavy development.
 
 - [ ] User Management
     - [ ] `GetUsers() ([]User, error)`
-    - [ ] `CreateUser(email, password, lang string) error`
+    - [ ] `CreateUser(email, password, language string) error`
     - [ ] `ChangeUserPassword(userId, newPassword string) error`
     - [ ] `UpdateUserProfile(userId, newName, newEmail string) error`
     - [ ] `RemoveUsers(userIds ...string) error`
