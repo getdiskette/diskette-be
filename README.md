@@ -50,25 +50,30 @@ Under heavy development.
 - 0.2.0
     - Authentication API
         - Unauthenticated User:
-            - [x] signup
+            - [x] sign up
             ```bash
             # example
             http POST localhost:5025/user/signup \
                 name="Joe Doe" email=joe.doe@gmail.com password=abc language=en
             ```
 
-            - [x] confirm signup
+            - [x] confirm sign up
             ```bash
             http POST localhost:5025/user/confirm token=<confirmation_token>
             ```
 
-            - [x] signin
+            - [x] sign in
             ```bash
             # example
             http POST localhost:5025/user/signin email=joe.doe@gmail.com password=abc
             ```
 
-            - [ ] `ForgotPasword(email, lang string) (resetToken string, err error)`
+            - [x] forgot password, request a new one
+            ```bash
+            # example
+            http POST localhost:5025/user/forgot-passwort email=joe.doe@gmail.com
+            ```
+
             - [ ] `ResetPassword(resetToken, newPassword string) error`
         - Authenticated User:
             - [ ] `Signout(sessionToken) error`

@@ -19,6 +19,7 @@ type UserService interface {
 	Signup(c *echo.Context) error
 	ConfirmSignup(c *echo.Context) error
 	Signin(c *echo.Context) error
+	ForgotPassword(c *echo.Context) error
 }
 
 type impl struct {
@@ -57,27 +58,22 @@ func (self impl) Signup(c *echo.Context) error {
 		return c.JSON(http.StatusBadRequest, util.CreateErrResponse(errors.New("Error: Missing parameter 'language'")))
 	}
 
-	tokenStr, err := self.createUser(request.Name, request.Email, request.Password, request.Language, false)
-	if err != nil {
-		return c.JSON(http.StatusConflict, util.CreateErrResponse(err))
-	}
-
-	return c.JSON(http.StatusOK, util.CreateOkResponse(bson.M{"confirmationToken": tokenStr}))
+	return self.createUser(c, request.Name, request.Email, request.Password, request.Language, false)
 }
 
-func (self impl) createUser(name, email, password, language string, isConfirmed bool) (tokenStr string, err error) {
+func (self impl) createUser(c *echo.Context, name, email, password, language string, isConfirmed bool) error {
 	count, err := self.db.C(USER_COLLECTION).Find(bson.M{"email": email}).Count()
 	if err != nil {
-		return
+		return c.JSON(http.StatusInternalServerError, util.CreateErrResponse(err))
 	}
 
 	if count > 0 {
-		return "", errors.New("Error: This email address is already being used.")
+		return c.JSON(http.StatusConflict, util.CreateErrResponse(errors.New("Error: This email address is already being used.")))
 	}
 
 	hashedPass, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
 	if err != nil {
-		return
+		return c.JSON(http.StatusInternalServerError, util.CreateErrResponse(err))
 	}
 
 	userDoc := UserDoc{
@@ -89,26 +85,28 @@ func (self impl) createUser(name, email, password, language string, isConfirmed 
 		IsSuspended: false,
 	}
 
+	var tokenStr string
+
 	if isConfirmed {
 		userDoc.ConfirmedAt = time.Now()
 
 	} else {
 		userDoc.ConfirmationKey = uuid.NewV4().String()
 
-		token := confirmationToken{
-			database: self.db.Name,
-			key:      userDoc.ConfirmationKey,
-			language: userDoc.Language,
-		}
+		token := confirmationToken{key: userDoc.ConfirmationKey}
 
 		tokenStr, err = token.toString(self.jwtKey)
 		if err != nil {
-			return
+			return c.JSON(http.StatusInternalServerError, util.CreateErrResponse(err))
 		}
 	}
 
 	err = self.db.C(USER_COLLECTION).Insert(userDoc)
-	return
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, util.CreateErrResponse(err))
+	}
+
+	return c.JSON(http.StatusOK, util.CreateOkResponse(bson.M{"confirmationToken": tokenStr}))
 }
 
 // http POST localhost:5025/user/confirm token=<confirmation_token>
@@ -117,6 +115,10 @@ func (self impl) ConfirmSignup(c *echo.Context) error {
 		Token string `json:"token"`
 	}
 	c.Bind(&request)
+
+	if request.Token == "" {
+		return c.JSON(http.StatusBadRequest, util.CreateErrResponse(errors.New("Error: Missing parameter 'token'")))
+	}
 
 	token, err := parseConfirmationToken(self.jwtKey, request.Token)
 	if err != nil {
@@ -141,10 +143,18 @@ func (self impl) Signin(c *echo.Context) error {
 	}
 	c.Bind(&request)
 
+	if request.Email == "" {
+		return c.JSON(http.StatusBadRequest, util.CreateErrResponse(errors.New("Error: Missing parameter 'email'")))
+	}
+
+	if request.Password == "" {
+		return c.JSON(http.StatusBadRequest, util.CreateErrResponse(errors.New("Error: Missing parameter 'password'")))
+	}
+
 	var userDoc UserDoc
 	err := self.db.C(USER_COLLECTION).Find(bson.M{"email": request.Email}).One(&userDoc)
 	if err != nil {
-		return c.JSON(http.StatusUnauthorized, util.CreateErrResponse(errors.New("The user doesn't exist.")))
+		return c.JSON(http.StatusNotFound, util.CreateErrResponse(errors.New("The user doesn't exist.")))
 	}
 
 	if userDoc.ConfirmedAt.Before(userDoc.CreatedAt) {
@@ -171,4 +181,38 @@ func (self impl) Signin(c *echo.Context) error {
 	}
 
 	return c.JSON(http.StatusOK, util.CreateOkResponse(bson.M{"sessionToken": tokenStr}))
+}
+
+// http POST localhost:5025/user/forgot-password email=joe.doe@gmail.com
+func (self impl) ForgotPassword(c *echo.Context) error {
+	var request struct {
+		Email string `json:"email"`
+	}
+	c.Bind(&request)
+
+	if request.Email == "" {
+		return c.JSON(http.StatusBadRequest, util.CreateErrResponse(errors.New("Error: Missing parameter 'email'")))
+	}
+
+	resetKey := uuid.NewV4().String()
+
+	err := self.db.C(USER_COLLECTION).Update(
+		bson.M{"email": request.Email},
+		bson.M{
+			"$set": bson.M{
+				"resetKey": resetKey,
+			},
+		},
+	)
+	if err != nil {
+		return c.JSON(http.StatusNotFound, util.CreateErrResponse(errors.New("The user doesn't exist.")))
+	}
+
+	token := resetToken{key: resetKey}
+	tokenStr, err := token.toString(self.jwtKey)
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, util.CreateErrResponse(err))
+	}
+
+	return c.JSON(http.StatusOK, util.CreateOkResponse(bson.M{"resetToken": tokenStr}))
 }
