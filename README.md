@@ -79,7 +79,6 @@ Under heavy development.
     ```
 
     - [ ] `Signout(sessionToken) error`
-    - [ ] `SignoutAllSessions(sessionToken) error`
     - [ ] `ChangePassword(sessionToken, oldPassword, newPassword string) error`
     - [ ] `UpdateProfile(sessionToken, password, newName string, newEmail string) error`
 
@@ -89,7 +88,7 @@ Under heavy development.
     - [ ] `ChangeUserPassword(userId, newPassword string) error`
     - [ ] `ChangeUserEmail(userId, newEmail string) error`
     - [ ] `RemoveUsers(userIds ...string) error`
-    - [ ] `SignoutAllSessions(userIds ...string) error`
+    - [ ] `Signout(userIds ...string) error`
     - [ ] `SuspendUsers(userIds ...string) error`
     - [ ] `UnsuspendUsers(userIds ...string) error`
     - [ ] `RemoveUnconfirmedUsers() error`
