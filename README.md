@@ -41,30 +41,30 @@ Under heavy development.
     - [x] sign up
     ```bash
     # example
-    http POST localhost:5025/user/signup name="Joe Doe" email=joe.doe@gmail.com password=abc language=en
+    http POST localhost:5025/public/signup name="Joe Doe" email=joe.doe@gmail.com password=abc language=en
     ```
 
     - [x] confirm sign up
     ```bash
-    http POST localhost:5025/user/confirm token=<confirmation_token>
+    http POST localhost:5025/public/confirm token=<confirmation_token>
     ```
 
     - [x] sign in
     ```bash
     # example
-    http POST localhost:5025/user/signin email=joe.doe@gmail.com password=abc
+    http POST localhost:5025/public/signin email=joe.doe@gmail.com password=abc
     ```
 
     - [x] forgot password
     ```bash
     # example
-    http POST localhost:5025/user/forgot-password email=joe.doe@gmail.com
+    http POST localhost:5025/public/forgot-password email=joe.doe@gmail.com
     ```
 
     - [x] reset password
     ```bash
     # example
-    http POST localhost:5025/user/reset-password token=<reset_token> password=123
+    http POST localhost:5025/public/reset-password token=<reset_token> password=123
     ```
 
     - [ ] `Signout(sessionToken) error`

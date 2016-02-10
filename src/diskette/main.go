@@ -40,11 +40,11 @@ func main() {
 	e.Put("/:collection", restService.Put)
 	e.Delete("/:collection", restService.Delete)
 
-	e.Post("/user/signup", userService.Signup)
-	e.Post("/user/confirm", userService.ConfirmSignup)
-	e.Post("/user/signin", userService.Signin)
-	e.Post("/user/forgot-password", userService.ForgotPassword)
-	e.Post("/user/reset-password", userService.ResetPassword)
+	e.Post("/public/signup", userService.Signup)
+	e.Post("/public/confirm", userService.ConfirmSignup)
+	e.Post("/public/signin", userService.Signin)
+	e.Post("/public/forgot-password", userService.ForgotPassword)
+	e.Post("/public/reset-password", userService.ResetPassword)
 
 	fmt.Println("Listening at http://localhost:5025")
 	e.Run(":5025")

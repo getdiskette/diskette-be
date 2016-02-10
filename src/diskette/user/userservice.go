@@ -33,7 +33,7 @@ func NewUserService(db *mgo.Database, jwtKey []byte) UserService {
 }
 
 // Example:
-// http POST localhost:5025/user/signup name="Joe Doe" email=joe.doe@gmail.com password=abc language=en
+// http POST localhost:5025/public/signup name="Joe Doe" email=joe.doe@gmail.com password=abc language=en
 func (self impl) Signup(c *echo.Context) error {
 	var request struct {
 		Name     string `json:"name"`
@@ -110,7 +110,7 @@ func (self impl) createUser(c *echo.Context, name, email, password, language str
 	return c.JSON(http.StatusOK, util.CreateOkResponse(bson.M{"confirmationToken": tokenStr}))
 }
 
-// http POST localhost:5025/user/confirm token=<confirmation_token>
+// http POST localhost:5025/public/confirm token=<confirmation_token>
 func (self impl) ConfirmSignup(c *echo.Context) error {
 	var request struct {
 		Token string `json:"token"`
@@ -136,7 +136,7 @@ func (self impl) ConfirmSignup(c *echo.Context) error {
 	)
 }
 
-// http POST localhost:5025/user/signin email=joe.doe@gmail.com password=abc
+// http POST localhost:5025/public/signin email=joe.doe@gmail.com password=abc
 func (self impl) Signin(c *echo.Context) error {
 	var request struct {
 		Email    string `json:"email"`
@@ -184,7 +184,7 @@ func (self impl) Signin(c *echo.Context) error {
 	return c.JSON(http.StatusOK, util.CreateOkResponse(bson.M{"sessionToken": tokenStr}))
 }
 
-// http POST localhost:5025/user/forgot-password email=joe.doe@gmail.com
+// http POST localhost:5025/public/forgot-password email=joe.doe@gmail.com
 func (self impl) ForgotPassword(c *echo.Context) error {
 	var request struct {
 		Email string `json:"email"`
@@ -219,7 +219,7 @@ func (self impl) ForgotPassword(c *echo.Context) error {
 	return c.JSON(http.StatusOK, util.CreateOkResponse(bson.M{"resetToken": tokenStr}))
 }
 
-// http POST localhost:5025/user/reset-passwort token=<reset_token> password=123
+// http POST localhost:5025/public/reset-passwort token=<reset_token> password=123
 func (self impl) ResetPassword(c *echo.Context) error {
 	var request struct {
 		Token    string `json:"token"`
