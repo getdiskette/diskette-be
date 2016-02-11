@@ -69,7 +69,12 @@ Under heavy development.
     http POST localhost:5025/user/reset-password token=<reset_token> password=123
     ```
 
-    - [ ] `Signout(sessionToken) error`
+    - [x] sign out
+    ```bash
+    # example
+    http POST localhost:5025/user/signout?st=<session_token>
+    ```
+
     - [ ] `ChangePassword(sessionToken, oldPassword, newPassword string) error`
     - [ ] `UpdateProfile(sessionToken, password, newName string, newEmail string) error`
 
