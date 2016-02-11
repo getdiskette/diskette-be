@@ -1,3 +1,5 @@
+[![Go Report Card](https://goreportcard.com/badge/github.com/getdiskette/diskette)](https://goreportcard.com/report/github.com/getdiskette/diskette)
+
 # Diskette
 
 MongoDB + REST API + Authentication + Authorization + Mail Notifications
