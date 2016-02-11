@@ -11,7 +11,7 @@ import (
 
 // examples:
 // http DELETE localhost:5025/user?q='{"name":"dfreire"}'
-func (self *impl) Delete(c *echo.Context) error {
+func (service *impl) Delete(c *echo.Context) error {
 	collection := c.Param("collection")
 
 	queryStr := c.Query("q")
@@ -25,7 +25,7 @@ func (self *impl) Delete(c *echo.Context) error {
 		return c.JSON(http.StatusInternalServerError, util.CreateErrResponse(err))
 	}
 
-	_, err := self.db.C(collection).RemoveAll(query)
+	_, err := service.db.C(collection).RemoveAll(query)
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, util.CreateErrResponse(err))
 	}

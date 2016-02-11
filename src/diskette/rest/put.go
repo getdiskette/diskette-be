@@ -11,7 +11,7 @@ import (
 
 // examples:
 // http PUT localhost:5025/user?q='{"name":"dfreire"}' \$set:='{"name":"dariofreire"}'
-func (self *impl) Put(c *echo.Context) error {
+func (service *impl) Put(c *echo.Context) error {
 	collection := c.Param("collection")
 
 	queryStr := c.Query("q")
@@ -28,7 +28,7 @@ func (self *impl) Put(c *echo.Context) error {
 	var partialDoc map[string]interface{}
 	c.Bind(&partialDoc)
 
-	_, err := self.db.C(collection).UpdateAll(query, partialDoc)
+	_, err := service.db.C(collection).UpdateAll(query, partialDoc)
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, util.CreateErrResponse(err))
 	}

@@ -14,7 +14,7 @@ import (
 )
 
 // http POST localhost:5025/user/signin email=joe.doe@gmail.com password=abc
-func (self impl) Signin(c *echo.Context) error {
+func (service *impl) Signin(c *echo.Context) error {
 	var request struct {
 		Email    string `json:"email"`
 		Password string `json:"password"`
@@ -30,7 +30,7 @@ func (self impl) Signin(c *echo.Context) error {
 	}
 
 	var userDoc collections.UserDocument
-	err := self.userCollection.Find(bson.M{"email": request.Email}).One(&userDoc)
+	err := service.userCollection.Find(bson.M{"email": request.Email}).One(&userDoc)
 	if err != nil {
 		return c.JSON(http.StatusNotFound, util.CreateErrResponse(errors.New("The user doesn't exist.")))
 	}
@@ -52,7 +52,7 @@ func (self impl) Signin(c *echo.Context) error {
 		CreatedAt: time.Now(),
 	}
 
-	tokenStr, err := token.ToString(self.jwtKey)
+	tokenStr, err := token.ToString(service.jwtKey)
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, util.CreateErrResponse(err))
 	}

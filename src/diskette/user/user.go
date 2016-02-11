@@ -5,7 +5,7 @@ import (
 	"labix.org/v2/mgo"
 )
 
-type AuthenticationService interface {
+type UserService interface {
 	// Publicly Available
 	Signup(c *echo.Context) error
 	ConfirmSignup(c *echo.Context) error
@@ -21,6 +21,6 @@ type impl struct {
 	jwtKey         []byte
 }
 
-func NewAuthenticationService(userCollection *mgo.Collection, jwtKey []byte) AuthenticationService {
+func NewUserService(userCollection *mgo.Collection, jwtKey []byte) UserService {
 	return &impl{userCollection, jwtKey}
 }

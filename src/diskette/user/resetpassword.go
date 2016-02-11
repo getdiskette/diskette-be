@@ -13,7 +13,7 @@ import (
 )
 
 // http POST localhost:5025/user/reset-password token=<reset_token> password=123
-func (self impl) ResetPassword(c *echo.Context) error {
+func (service *impl) ResetPassword(c *echo.Context) error {
 	var request struct {
 		Token    string `json:"token"`
 		Password string `json:"password"`
@@ -28,7 +28,7 @@ func (self impl) ResetPassword(c *echo.Context) error {
 		return c.JSON(http.StatusBadRequest, util.CreateErrResponse(errors.New("Missing parameter 'password'")))
 	}
 
-	token, err := tokens.ParseResetToken(self.jwtKey, request.Token)
+	token, err := tokens.ParseResetToken(service.jwtKey, request.Token)
 	if err != nil || token.Key == "" {
 		return c.JSON(http.StatusForbidden, util.CreateErrResponse(err))
 	}
@@ -38,7 +38,7 @@ func (self impl) ResetPassword(c *echo.Context) error {
 		return c.JSON(http.StatusInternalServerError, util.CreateErrResponse(err))
 	}
 
-	err = self.userCollection.Update(
+	err = service.userCollection.Update(
 		bson.M{"resetKey": token.Key},
 		bson.M{
 			"$set": bson.M{

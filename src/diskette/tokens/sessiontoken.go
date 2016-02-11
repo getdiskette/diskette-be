@@ -11,10 +11,10 @@ type SessionToken struct {
 	CreatedAt time.Time `json:"createdAt"`
 }
 
-func (self SessionToken) ToString(jwtKey []byte) (string, error) {
+func (service SessionToken) ToString(jwtKey []byte) (string, error) {
 	jwtToken := jwt.New(jwt.SigningMethodHS256)
-	jwtToken.Claims["userId"] = self.UserId
-	jwtToken.Claims["createdAt"] = self.CreatedAt.Unix()
+	jwtToken.Claims["userId"] = service.UserId
+	jwtToken.Claims["createdAt"] = service.CreatedAt.Unix()
 	return jwtToken.SignedString(jwtKey)
 }
 

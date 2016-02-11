@@ -14,7 +14,7 @@ import (
 )
 
 // http POST localhost:5025/user/forgot-password email=joe.doe@gmail.com
-func (self impl) ForgotPassword(c *echo.Context) error {
+func (service *impl) ForgotPassword(c *echo.Context) error {
 	var request struct {
 		Email string `json:"email"`
 	}
@@ -26,7 +26,7 @@ func (self impl) ForgotPassword(c *echo.Context) error {
 
 	resetKey := uuid.NewV4().String()
 
-	err := self.userCollection.Update(
+	err := service.userCollection.Update(
 		bson.M{"email": request.Email},
 		bson.M{
 			"$set": bson.M{
@@ -40,7 +40,7 @@ func (self impl) ForgotPassword(c *echo.Context) error {
 	}
 
 	token := tokens.ResetToken{Key: resetKey}
-	tokenStr, err := token.ToString(self.jwtKey)
+	tokenStr, err := token.ToString(service.jwtKey)
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, util.CreateErrResponse(err))
 	}

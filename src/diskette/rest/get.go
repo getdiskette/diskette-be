@@ -12,7 +12,7 @@ import (
 // http localhost:5025/user
 // http localhost:5025/user?q='{"name":"dfreire"}'
 // http localhost:5025/user?q='{"name":{"$ne":"dfreire"}}'
-func (self *impl) Get(c *echo.Context) error {
+func (service *impl) Get(c *echo.Context) error {
 	collection := c.Param("collection")
 
 	var query map[string]interface{}
@@ -24,7 +24,7 @@ func (self *impl) Get(c *echo.Context) error {
 	}
 
 	var documents []interface{}
-	err := self.db.C(collection).Find(query).All(&documents)
+	err := service.db.C(collection).Find(query).All(&documents)
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, util.CreateErrResponse(err))
 	}

@@ -6,9 +6,9 @@ type ResetToken struct {
 	Key string
 }
 
-func (self ResetToken) ToString(jwtKey []byte) (string, error) {
+func (service ResetToken) ToString(jwtKey []byte) (string, error) {
 	jwtToken := jwt.New(jwt.SigningMethodHS256)
-	jwtToken.Claims["key"] = self.Key
+	jwtToken.Claims["key"] = service.Key
 	return jwtToken.SignedString(jwtKey)
 }
 

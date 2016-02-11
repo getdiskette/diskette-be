@@ -6,9 +6,9 @@ type ConfirmationToken struct {
 	Key string
 }
 
-func (self ConfirmationToken) ToString(jwtKey []byte) (string, error) {
+func (service ConfirmationToken) ToString(jwtKey []byte) (string, error) {
 	jwtToken := jwt.New(jwt.SigningMethodHS256)
-	jwtToken.Claims["key"] = self.Key
+	jwtToken.Claims["key"] = service.Key
 	return jwtToken.SignedString(jwtKey)
 }
 

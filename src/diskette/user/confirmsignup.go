@@ -13,7 +13,7 @@ import (
 )
 
 // http POST localhost:5025/user/confirm token=<confirmation_token>
-func (self impl) ConfirmSignup(c *echo.Context) error {
+func (service *impl) ConfirmSignup(c *echo.Context) error {
 	var request struct {
 		Token string `json:"token"`
 	}
@@ -23,12 +23,12 @@ func (self impl) ConfirmSignup(c *echo.Context) error {
 		return c.JSON(http.StatusBadRequest, util.CreateErrResponse(errors.New("Missing parameter 'token'")))
 	}
 
-	token, err := tokens.ParseConfirmationToken(self.jwtKey, request.Token)
+	token, err := tokens.ParseConfirmationToken(service.jwtKey, request.Token)
 	if err != nil || token.Key == "" {
 		return c.JSON(http.StatusForbidden, util.CreateErrResponse(err))
 	}
 
-	err = self.userCollection.Update(
+	err = service.userCollection.Update(
 		bson.M{"confirmationKey": token.Key},
 		bson.M{
 			"$set": bson.M{

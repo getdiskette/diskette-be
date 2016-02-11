@@ -8,7 +8,7 @@ import (
 	"net/http"
 	"time"
 
-	"diskette/vendor/github.com/satori/go.uuid"
+	"github.com/satori/go.uuid"
 
 	"github.com/labstack/echo"
 	"golang.org/x/crypto/bcrypt"
@@ -16,7 +16,7 @@ import (
 )
 
 // http POST localhost:5025/user/signup name="Joe Doe" email=joe.doe@gmail.com password=abc language=en
-func (self impl) Signup(c *echo.Context) error {
+func (service *impl) Signup(c *echo.Context) error {
 	var request struct {
 		Name     string `json:"name"`
 		Email    string `json:"email"`
@@ -41,11 +41,11 @@ func (self impl) Signup(c *echo.Context) error {
 		return c.JSON(http.StatusBadRequest, util.CreateErrResponse(errors.New("Missing parameter 'language'")))
 	}
 
-	return self.createUser(c, request.Name, request.Email, request.Password, request.Language, false)
+	return service.createUser(c, request.Name, request.Email, request.Password, request.Language, false)
 }
 
-func (self impl) createUser(c *echo.Context, name, email, password, language string, isConfirmed bool) error {
-	count, err := self.userCollection.Find(bson.M{"email": email}).Count()
+func (service *impl) createUser(c *echo.Context, name, email, password, language string, isConfirmed bool) error {
+	count, err := service.userCollection.Find(bson.M{"email": email}).Count()
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, util.CreateErrResponse(err))
 	}
@@ -79,13 +79,13 @@ func (self impl) createUser(c *echo.Context, name, email, password, language str
 
 		token := tokens.ConfirmationToken{Key: userDoc.ConfirmationKey}
 
-		tokenStr, err = token.ToString(self.jwtKey)
+		tokenStr, err = token.ToString(service.jwtKey)
 		if err != nil {
 			return c.JSON(http.StatusInternalServerError, util.CreateErrResponse(err))
 		}
 	}
 
-	err = self.userCollection.Insert(userDoc)
+	err = service.userCollection.Insert(userDoc)
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, util.CreateErrResponse(err))
 	}
