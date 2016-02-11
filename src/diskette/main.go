@@ -32,7 +32,7 @@ func main() {
 
 	e := echo.New()
 
-	userService := user.NewUserService(userCollection, jwtKey)
+	userService := user.NewService(userCollection, jwtKey)
 	user := e.Group("/user")
 	user.Post("/signup", userService.Signup)
 	user.Post("/confirm", userService.ConfirmSignup)
