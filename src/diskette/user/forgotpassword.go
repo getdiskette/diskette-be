@@ -14,7 +14,7 @@ import (
 )
 
 // http POST localhost:5025/user/forgot-password email=joe.doe@gmail.com
-func (service *impl) ForgotPassword(c *echo.Context) error {
+func (service *serviceImpl) ForgotPassword(c *echo.Context) error {
 	var request struct {
 		Email string `json:"email"`
 	}

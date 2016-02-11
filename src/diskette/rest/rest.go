@@ -5,17 +5,21 @@ import (
 	"labix.org/v2/mgo"
 )
 
-type RestService interface {
+// Service that exposes the common REST operations:
+// GET, POST, PUT, DELETE
+type Service interface {
 	Get(c *echo.Context) error
 	Post(c *echo.Context) error
 	Put(c *echo.Context) error
 	Delete(c *echo.Context) error
 }
 
-type impl struct {
+type serviceImpl struct {
 	db *mgo.Database
 }
 
-func NewRestService(db *mgo.Database) RestService {
-	return &impl{db}
+// NewService creates an instance of rest.Service that allows REST operations
+// on the specified mongodb database collections.
+func NewService(db *mgo.Database) Service {
+	return &serviceImpl{db}
 }

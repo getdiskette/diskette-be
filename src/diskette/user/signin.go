@@ -14,7 +14,7 @@ import (
 )
 
 // http POST localhost:5025/user/signin email=joe.doe@gmail.com password=abc
-func (service *impl) Signin(c *echo.Context) error {
+func (service *serviceImpl) Signin(c *echo.Context) error {
 	var request struct {
 		Email    string `json:"email"`
 		Password string `json:"password"`

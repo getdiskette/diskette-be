@@ -10,7 +10,7 @@ import (
 // POST /collection?st={sessionToken} BODY={doc}
 // examples:
 // http POST localhost:5025/user name=dfreire email=dario.freire@gmail.com
-func (service *impl) Post(c *echo.Context) error {
+func (service *serviceImpl) Post(c *echo.Context) error {
 	collection := c.Param("collection")
 	// sessionToken := c.Query("st")
 

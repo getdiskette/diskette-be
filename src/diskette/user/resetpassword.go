@@ -13,7 +13,7 @@ import (
 )
 
 // http POST localhost:5025/user/reset-password token=<reset_token> password=123
-func (service *impl) ResetPassword(c *echo.Context) error {
+func (service *serviceImpl) ResetPassword(c *echo.Context) error {
 	var request struct {
 		Token    string `json:"token"`
 		Password string `json:"password"`

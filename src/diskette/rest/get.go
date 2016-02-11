@@ -12,7 +12,7 @@ import (
 // http localhost:5025/user
 // http localhost:5025/user?q='{"name":"dfreire"}'
 // http localhost:5025/user?q='{"name":{"$ne":"dfreire"}}'
-func (service *impl) Get(c *echo.Context) error {
+func (service *serviceImpl) Get(c *echo.Context) error {
 	collection := c.Param("collection")
 
 	var query map[string]interface{}

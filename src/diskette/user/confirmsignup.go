@@ -13,7 +13,7 @@ import (
 )
 
 // http POST localhost:5025/user/confirm token=<confirmation_token>
-func (service *impl) ConfirmSignup(c *echo.Context) error {
+func (service *serviceImpl) ConfirmSignup(c *echo.Context) error {
 	var request struct {
 		Token string `json:"token"`
 	}

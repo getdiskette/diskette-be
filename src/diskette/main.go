@@ -15,19 +15,19 @@ import (
 	"labix.org/v2/mgo"
 )
 
-type Config struct {
+type config struct {
 	Database string `json:"database"`
 	JwtKey   string `json:"jwtKey"`
 }
 
 func main() {
-	config := readConfig()
-	jwtKey := []byte(config.JwtKey)
+	cfg := readConfig()
+	jwtKey := []byte(cfg.JwtKey)
 
 	mongoSession := createMongoSession()
 	defer mongoSession.Close()
 
-	db := mongoSession.DB(config.Database)
+	db := mongoSession.DB(cfg.Database)
 	userCollection := db.C(collections.USER_COLLECTION_NAME)
 
 	e := echo.New()
@@ -46,7 +46,7 @@ func main() {
 	// private.Post("/change-password", userService.ChangePassword)
 	// private.Post("/update-profile", userService.UpdateProfile)
 
-	restService := rest.NewRestService(db)
+	restService := rest.NewService(db)
 	e.Get("/:collection", restService.Get)
 	e.Post("/:collection", restService.Post)
 	e.Put("/:collection", restService.Put)
@@ -56,16 +56,16 @@ func main() {
 	e.Run(":5025")
 }
 
-func readConfig() Config {
-	var config Config
-	configData, err := ioutil.ReadFile("config.json")
+func readConfig() config {
+	var cfg config
+	cfgData, err := ioutil.ReadFile("config.json")
 	if err != nil {
 		log.Fatal(err)
 	}
-	if err := json.Unmarshal(configData, &config); err != nil {
+	if err := json.Unmarshal(cfgData, &cfg); err != nil {
 		log.Fatal(err)
 	}
-	return config
+	return cfg
 }
 
 func createMongoSession() *mgo.Session {

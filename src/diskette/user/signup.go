@@ -16,7 +16,7 @@ import (
 )
 
 // http POST localhost:5025/user/signup name="Joe Doe" email=joe.doe@gmail.com password=abc language=en
-func (service *impl) Signup(c *echo.Context) error {
+func (service *serviceImpl) Signup(c *echo.Context) error {
 	var request struct {
 		Name     string `json:"name"`
 		Email    string `json:"email"`
@@ -44,7 +44,7 @@ func (service *impl) Signup(c *echo.Context) error {
 	return service.createUser(c, request.Name, request.Email, request.Password, request.Language, false)
 }
 
-func (service *impl) createUser(c *echo.Context, name, email, password, language string, isConfirmed bool) error {
+func (service *serviceImpl) createUser(c *echo.Context, name, email, password, language string, isConfirmed bool) error {
 	count, err := service.userCollection.Find(bson.M{"email": email}).Count()
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, util.CreateErrResponse(err))

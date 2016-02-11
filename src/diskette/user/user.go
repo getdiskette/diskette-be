@@ -16,11 +16,11 @@ type UserService interface {
 	Signout(c *echo.Context) error
 }
 
-type impl struct {
+type serviceImpl struct {
 	userCollection *mgo.Collection
 	jwtKey         []byte
 }
 
 func NewUserService(userCollection *mgo.Collection, jwtKey []byte) UserService {
-	return &impl{userCollection, jwtKey}
+	return &serviceImpl{userCollection, jwtKey}
 }

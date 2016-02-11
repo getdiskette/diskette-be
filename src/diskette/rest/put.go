@@ -11,7 +11,7 @@ import (
 
 // examples:
 // http PUT localhost:5025/user?q='{"name":"dfreire"}' \$set:='{"name":"dariofreire"}'
-func (service *impl) Put(c *echo.Context) error {
+func (service *serviceImpl) Put(c *echo.Context) error {
 	collection := c.Param("collection")
 
 	queryStr := c.Query("q")
