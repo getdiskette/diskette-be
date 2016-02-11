@@ -6,7 +6,7 @@ import (
 	"labix.org/v2/mgo/bson"
 )
 
-const USER_COLLECTION_NAME = "user"
+const UserCollectionName = "user"
 
 type UserDocument struct {
 	Id                   bson.ObjectId `bson:"_id"`

@@ -28,7 +28,7 @@ func main() {
 	defer mongoSession.Close()
 
 	db := mongoSession.DB(cfg.Database)
-	userCollection := db.C(collections.USER_COLLECTION_NAME)
+	userCollection := db.C(collections.UserCollectionName)
 
 	e := echo.New()
 
