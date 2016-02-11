@@ -48,7 +48,7 @@ func (service *serviceImpl) Signin(c *echo.Context) error {
 	}
 
 	token := tokens.SessionToken{
-		UserId:    userDoc.Id.Hex(),
+		UserID:    userDoc.Id.Hex(),
 		CreatedAt: time.Now(),
 	}
 

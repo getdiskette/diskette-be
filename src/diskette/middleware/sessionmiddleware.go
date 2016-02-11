@@ -23,7 +23,7 @@ func CreateSessionMiddleware(userCollection *mgo.Collection, jwtKey []byte) echo
 		}
 
 		var userDoc collections.UserDocument
-		userCollection.FindId(bson.ObjectIdHex(sessionToken.UserId)).One(&userDoc)
+		userCollection.FindId(bson.ObjectIdHex(sessionToken.UserID)).One(&userDoc)
 
 		if sessionToken.CreatedAt.Before(userDoc.RejectSessionsBefore) {
 			return c.JSON(http.StatusUnauthorized, util.CreateErrResponse(errors.New("The session has expired.")))
