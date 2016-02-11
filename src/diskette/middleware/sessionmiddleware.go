@@ -1,12 +1,12 @@
 package middleware
 
 import (
-	"errors"
-	"net/http"
-
 	"diskette/collections"
 	"diskette/tokens"
 	"diskette/util"
+
+	"errors"
+	"net/http"
 
 	"github.com/labstack/echo"
 	"labix.org/v2/mgo"
@@ -23,11 +23,19 @@ func CreateSessionMiddleware(userCollection *mgo.Collection, jwtKey []byte) echo
 		}
 
 		var userDoc collections.UserDocument
-		userCollection.FindId(bson.ObjectIdHex(sessionToken.UserID)).One(&userDoc)
+		err = userCollection.FindId(bson.ObjectIdHex(sessionToken.UserId)).One(&userDoc)
+		if err != nil {
+			return c.JSON(http.StatusNotFound, util.CreateErrResponse(errors.New("The session is not valid.")))
+		}
 
 		if sessionToken.CreatedAt.Before(userDoc.RejectSessionsBefore) {
-			return c.JSON(http.StatusUnauthorized, util.CreateErrResponse(errors.New("The session has expired.")))
+			err = errors.New("The session has expired.")
+			c.JSON(http.StatusUnauthorized, util.CreateErrResponse(err))
+			return err
 		}
+
+		c.Set("sessionToken", sessionToken)
+		c.Set("userDoc", userDoc)
 
 		return nil
 	}

@@ -7,13 +7,13 @@ import (
 )
 
 type SessionToken struct {
-	UserID    string    `json:"UserID"`
+	UserId    string    `json:"UserId"`
 	CreatedAt time.Time `json:"createdAt"`
 }
 
 func (service SessionToken) ToString(jwtKey []byte) (string, error) {
 	jwtToken := jwt.New(jwt.SigningMethodHS256)
-	jwtToken.Claims["UserID"] = service.UserID
+	jwtToken.Claims["UserId"] = service.UserId
 	jwtToken.Claims["createdAt"] = service.CreatedAt.Unix()
 	return jwtToken.SignedString(jwtKey)
 }
@@ -29,7 +29,7 @@ func ParseSessionToken(jwtKey []byte, tokenStr string) (token SessionToken, err 
 		return
 	}
 
-	token.UserID = jwtToken.Claims["UserID"].(string)
+	token.UserId = jwtToken.Claims["UserId"].(string)
 	token.CreatedAt = time.Unix(int64(jwtToken.Claims["createdAt"].(float64)), 0)
 	return
 }
