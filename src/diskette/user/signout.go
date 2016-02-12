@@ -3,7 +3,6 @@ package user
 import (
 	"diskette/tokens"
 	"diskette/util"
-	"errors"
 	"net/http"
 	"time"
 
@@ -16,7 +15,7 @@ func (service *serviceImpl) Signout(c *echo.Context) error {
 	sessionToken := c.Get("sessionToken").(tokens.SessionToken)
 
 	err := service.userCollection.UpdateId(
-		sessionToken.UserId,
+		bson.ObjectIdHex(sessionToken.UserId),
 		bson.M{
 			"$set": bson.M{
 				"signedOutAt": time.Now(),
@@ -25,7 +24,7 @@ func (service *serviceImpl) Signout(c *echo.Context) error {
 	)
 
 	if err != nil {
-		return c.JSON(http.StatusNotFound, util.CreateErrResponse(errors.New("The user doesn't exist.")))
+		return c.JSON(http.StatusInternalServerError, util.CreateErrResponse(err))
 	}
 
 	return c.JSON(http.StatusOK, util.CreateOkResponse(nil))

@@ -24,7 +24,7 @@ func (service *serviceImpl) UpdateProfile(c *echo.Context) error {
 	}
 
 	err := service.userCollection.UpdateId(
-		sessionToken.UserId,
+		bson.ObjectIdHex(sessionToken.UserId),
 		bson.M{
 			"$set": bson.M{
 				"profile": request.Profile,
@@ -32,7 +32,7 @@ func (service *serviceImpl) UpdateProfile(c *echo.Context) error {
 		},
 	)
 	if err != nil {
-		return c.JSON(http.StatusNotFound, util.CreateErrResponse(errors.New("The user doesn't exist.")))
+		return c.JSON(http.StatusInternalServerError, util.CreateErrResponse(err))
 	}
 
 	return c.JSON(http.StatusOK, util.CreateOkResponse(nil))
