@@ -44,6 +44,7 @@ func main() {
 	private := e.Group("/private", sessionMiddleware)
 	private.Post("/signout", userService.Signout)
 	private.Post("/change-password", userService.ChangePassword)
+	private.Post("/change-email", userService.ChangeEmail)
 	// private.Post("/update-profile", userService.UpdateProfile)
 
 	restService := rest.NewService(db)
