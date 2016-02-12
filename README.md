@@ -38,7 +38,7 @@ Under heavy development.
     http DELETE localhost:5025/user?q='{"name":"Joe Doe"}'
     ```
 
-- [ ] Authentication
+- [x] Authentication
 
     - [x] sign up
     ```bash
