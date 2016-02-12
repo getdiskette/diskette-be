@@ -80,6 +80,12 @@ Under heavy development.
         oldPassword=<old_password> newPassword=<new_password>
     ```
 
+    - [x] change email
+    ```bash
+    http POST localhost:5025/private/change-email?st=<session_token> \
+        password=<password> newEmail=<newEmail>
+    ```
+
     - [ ] `UpdateProfile(sessionToken, password, newName string, newEmail string) error`
 
 - [ ] User Management
