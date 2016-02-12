@@ -86,13 +86,18 @@ Under heavy development.
         password=<password> newEmail=<newEmail>
     ```
 
-    - [ ] `UpdateProfile(sessionToken, password, newName string, newEmail string) error`
+    - [x] update profile
+    ```bash
+    http POST localhost:5025/private/update-profile?st=<session_token> \
+        profile:='{"profession": "Software Developer"}'
+    ```
 
 - [ ] User Management
     - [ ] `GetUsers() ([]User, error)`
     - [ ] `CreateUser(email, password, language string) error`
     - [ ] `ChangeUserPassword(userId, newPassword string) error`
-    - [ ] `UpdateUserProfile(userId, newName, newEmail string) error`
+    - [ ] `ChangeUserEmail(userId, newEmail string) error`
+    - [ ] `UpdateUserProfile(userId, profile map[string]interface{}) error`
     - [ ] `RemoveUsers(userIds ...string) error`
     - [ ] `Signout(userIds ...string) error`
     - [ ] `SuspendUsers(userIds ...string) error`

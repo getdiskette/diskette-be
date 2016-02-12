@@ -45,7 +45,7 @@ func main() {
 	private.Post("/signout", userService.Signout)
 	private.Post("/change-password", userService.ChangePassword)
 	private.Post("/change-email", userService.ChangeEmail)
-	// private.Post("/update-profile", userService.UpdateProfile)
+	private.Post("/update-profile", userService.UpdateProfile)
 
 	restService := rest.NewService(db)
 	e.Get("/:collection", restService.Get)
