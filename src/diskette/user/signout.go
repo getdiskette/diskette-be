@@ -19,7 +19,7 @@ func (service *serviceImpl) Signout(c *echo.Context) error {
 		userDoc.Id,
 		bson.M{
 			"$set": bson.M{
-				"rejectSessionsBefore": time.Now(),
+				"signedOutAt": time.Now(),
 			},
 		},
 	)

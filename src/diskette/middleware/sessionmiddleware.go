@@ -28,7 +28,7 @@ func CreateSessionMiddleware(userCollection *mgo.Collection, jwtKey []byte) echo
 			return c.JSON(http.StatusNotFound, util.CreateErrResponse(errors.New("The session is not valid.")))
 		}
 
-		if sessionToken.CreatedAt.Before(userDoc.RejectSessionsBefore) {
+		if sessionToken.CreatedAt.Before(userDoc.SignedOutAt) {
 			err = errors.New("The session has expired.")
 			c.JSON(http.StatusUnauthorized, util.CreateErrResponse(err))
 			return err
