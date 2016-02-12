@@ -75,8 +75,10 @@ Under heavy development.
     ```
 
     - [x] change password
+    ```bash
     http POST localhost:5025/private/change-password?st=<session_token> \
         oldPassword=<old_password> newPassword=<new_password>
+    ```
 
     - [ ] `UpdateProfile(sessionToken, password, newName string, newEmail string) error`
 
