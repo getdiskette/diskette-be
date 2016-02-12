@@ -2,6 +2,7 @@ package user
 
 import (
 	"diskette/collections"
+	"diskette/tokens"
 	"diskette/util"
 	"errors"
 	"net/http"
@@ -14,6 +15,7 @@ import (
 
 // http POST localhost:5025/private/change-email?st=<session_token> password=<password> newEmail=<newEmail>
 func (service *serviceImpl) ChangeEmail(c *echo.Context) error {
+	sessionToken := c.Get("sessionToken").(tokens.SessionToken)
 	userDoc := c.Get("userDoc").(collections.UserDocument)
 
 	var request struct {
@@ -35,7 +37,7 @@ func (service *serviceImpl) ChangeEmail(c *echo.Context) error {
 	}
 
 	err := service.userCollection.UpdateId(
-		userDoc.Id,
+		sessionToken.UserId,
 		bson.M{
 			"$set": bson.M{
 				"email": request.NewEmail,

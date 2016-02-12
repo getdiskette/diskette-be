@@ -1,7 +1,7 @@
 package user
 
 import (
-	"diskette/collections"
+	"diskette/tokens"
 	"diskette/util"
 	"errors"
 	"net/http"
@@ -13,10 +13,10 @@ import (
 
 // http POST localhost:5025/private/signout?st=<session_token>
 func (service *serviceImpl) Signout(c *echo.Context) error {
-	userDoc := c.Get("userDoc").(collections.UserDocument)
+	sessionToken := c.Get("sessionToken").(tokens.SessionToken)
 
 	err := service.userCollection.UpdateId(
-		userDoc.Id,
+		sessionToken.UserId,
 		bson.M{
 			"$set": bson.M{
 				"signedOutAt": time.Now(),

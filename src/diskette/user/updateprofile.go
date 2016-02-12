@@ -1,7 +1,7 @@
 package user
 
 import (
-	"diskette/collections"
+	"diskette/tokens"
 	"diskette/util"
 	"errors"
 	"net/http"
@@ -12,7 +12,7 @@ import (
 
 // http POST localhost:5025/private/update-profile?st=<session_token> profile:='{"profession": "Software Developer"}'
 func (service *serviceImpl) UpdateProfile(c *echo.Context) error {
-	userDoc := c.Get("userDoc").(collections.UserDocument)
+	sessionToken := c.Get("sessionToken").(tokens.SessionToken)
 
 	var request struct {
 		Profile map[string]interface{} `json:"profile"`
@@ -24,7 +24,7 @@ func (service *serviceImpl) UpdateProfile(c *echo.Context) error {
 	}
 
 	err := service.userCollection.UpdateId(
-		userDoc.Id,
+		sessionToken.UserId,
 		bson.M{
 			"$set": bson.M{
 				"profile": request.Profile,
