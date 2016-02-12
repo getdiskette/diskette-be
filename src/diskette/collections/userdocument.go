@@ -21,5 +21,5 @@ type UserDocument struct {
 	ResetKey             string        `bson:"resetKey"`
 	RequestedResetAt     time.Time     `bson:"requestedResetAt"`
 	IsSuspended          bool          `bson:"isSuspended"`
-	RejectSessionsBefore time.Time     `bson:"rejectSessionsBefore"`
+	RejectSessionsBefore time.Time     `bson:"rejectSessionsBefore"` // TODO signedOutAt
 }

@@ -43,7 +43,7 @@ func main() {
 	sessionMiddleware := middleware.CreateSessionMiddleware(userCollection, jwtKey)
 	private := e.Group("/private", sessionMiddleware)
 	private.Post("/signout", userService.Signout)
-	// private.Post("/change-password", userService.ChangePassword)
+	private.Post("/change-password", userService.ChangePassword)
 	// private.Post("/update-profile", userService.UpdateProfile)
 
 	restService := rest.NewService(db)

@@ -14,6 +14,7 @@ type Service interface {
 	ResetPassword(c *echo.Context) error
 	// Authorized User
 	Signout(c *echo.Context) error
+	ChangePassword(c *echo.Context) error
 }
 
 type serviceImpl struct {

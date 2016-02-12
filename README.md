@@ -71,11 +71,13 @@ Under heavy development.
 
     - [x] sign out
     ```bash
-    # example
     http POST localhost:5025/user/signout?st=<session_token>
     ```
 
-    - [ ] `ChangePassword(sessionToken, oldPassword, newPassword string) error`
+    - [x] change password
+    http POST localhost:5025/private/change-password?st=<session_token> \
+        oldPassword=<old_password> newPassword=<new_password>
+
     - [ ] `UpdateProfile(sessionToken, password, newName string, newEmail string) error`
 
 - [ ] User Management
