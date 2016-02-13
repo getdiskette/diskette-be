@@ -49,8 +49,8 @@ func main() {
 	private.Post("/update-profile", userService.UpdateProfile)
 
 	adminService := admin.NewService(userCollection, jwtKey)
-	// adminSessionMiddleware := middleware.CreateAdminSessionMiddleware(userCollection, jwtKey)
-	admin := e.Group("/admin") //, adminSessionMiddleware)
+	adminSessionMiddleware := middleware.CreateAdminSessionMiddleware(userCollection, jwtKey)
+	admin := e.Group("/admin", adminSessionMiddleware)
 	admin.Get("/get-users", adminService.GetUsers)
 
 	restService := rest.NewService(db)
