@@ -15,27 +15,27 @@ Under heavy development.
     - [x] GET
     ```bash
     # examples:
-    http localhost:5025/user
-    http localhost:5025/user?q='{"name":"Joe Doe"}'
-    http localhost:5025/user?q='{"name":{"$ne":"Joe Doe"}}'
+    http localhost:5025/collection/user
+    http localhost:5025/collection/user?q='{"name":"Joe Doe"}'
+    http localhost:5025/collection/user?q='{"name":{"$ne":"Joe Doe"}}'
     ```
 
     - [x] POST
     ```bash
     # example:
-    http POST localhost:5025/user name="Joe Doe" email=joe.doe@gmail.com
+    http POST localhost:5025/collection/user name="Joe Doe" email=joe.doe@gmail.com
     ```
 
     - [x] PUT
     ```bash
     # example:
-    http PUT localhost:5025/user?q='{"name":"Joe Doe"}' \$set:='{"email":"jdoe@gmail.com"}'
+    http PUT localhost:5025/collection/user?q='{"name":"Joe Doe"}' \$set:='{"email":"jdoe@gmail.com"}'
     ```
 
     - [x] DELETE
     ```bash
     # example
-    http DELETE localhost:5025/user?q='{"name":"Joe Doe"}'
+    http DELETE localhost:5025/collection/user?q='{"name":"Joe Doe"}'
     ```
 
 - [x] Authentication

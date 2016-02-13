@@ -10,7 +10,7 @@ import (
 )
 
 // examples:
-// http DELETE localhost:5025/user?q='{"name":"dfreire"}'
+// http DELETE localhost:5025/collection/user?q='{"name":"dfreire"}'
 func (service *serviceImpl) Delete(c *echo.Context) error {
 	collection := c.Param("collection")
 

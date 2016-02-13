@@ -10,7 +10,7 @@ import (
 )
 
 // examples:
-// http PUT localhost:5025/user?q='{"name":"dfreire"}' \$set:='{"name":"dariofreire"}'
+// http PUT localhost:5025/collection/user?q='{"name":"dfreire"}' \$set:='{"name":"dariofreire"}'
 func (service *serviceImpl) Put(c *echo.Context) error {
 	collection := c.Param("collection")
 
