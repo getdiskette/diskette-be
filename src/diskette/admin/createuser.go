@@ -1,25 +1,24 @@
-package user
+package admin
 
 import (
 	"diskette/collections"
-	"diskette/tokens"
 	"diskette/util"
 	"errors"
 	"net/http"
 	"time"
 
-	"github.com/satori/go.uuid"
-
-	"github.com/labstack/echo"
 	"golang.org/x/crypto/bcrypt"
 	"labix.org/v2/mgo/bson"
+
+	"github.com/labstack/echo"
 )
 
-// http POST localhost:5025/user/signup email=joe.doe@gmail.com password=abc profile:='{"name": "Joe Doe", "language": "en" }'
-func (service *serviceImpl) Signup(c *echo.Context) error {
+// http POST localhost:5025/admin/create-user email="joe.doe@gmail.com" password="123" roles:='["admin"]' profile:='{"name": "Joe Doe", "lang": "en"}' X-Diskette-Session-Token:<session_token>
+func (service *serviceImpl) CreateUser(c *echo.Context) error {
 	var request struct {
 		Email    string                 `json:"email"`
 		Password string                 `json:"password"`
+		Roles    []string               `json:"roles"`
 		Profile  map[string]interface{} `json:"profile"`
 	}
 	c.Bind(&request)
@@ -29,6 +28,10 @@ func (service *serviceImpl) Signup(c *echo.Context) error {
 	}
 
 	if request.Password == "" {
+		return c.JSON(http.StatusBadRequest, util.CreateErrResponse(errors.New("Missing parameter 'password'")))
+	}
+
+	if request.Roles == nil {
 		return c.JSON(http.StatusBadRequest, util.CreateErrResponse(errors.New("Missing parameter 'password'")))
 	}
 
@@ -54,18 +57,11 @@ func (service *serviceImpl) Signup(c *echo.Context) error {
 		Id:          bson.NewObjectId(),
 		Email:       request.Email,
 		HashedPass:  hashedPass,
+		Roles:       request.Roles,
 		Profile:     request.Profile,
 		CreatedAt:   time.Now(),
 		IsSuspended: false,
-	}
-
-	userDoc.ConfirmationKey = uuid.NewV4().String()
-
-	token := tokens.ConfirmationToken{Key: userDoc.ConfirmationKey}
-
-	tokenStr, err := token.ToString(service.jwtKey)
-	if err != nil {
-		return c.JSON(http.StatusInternalServerError, util.CreateErrResponse(err))
+		ConfirmedAt: time.Now(),
 	}
 
 	err = service.userCollection.Insert(userDoc)
@@ -73,5 +69,5 @@ func (service *serviceImpl) Signup(c *echo.Context) error {
 		return c.JSON(http.StatusInternalServerError, util.CreateErrResponse(err))
 	}
 
-	return c.JSON(http.StatusOK, util.CreateOkResponse(bson.M{"ConfirmationToken": tokenStr}))
+	return c.JSON(http.StatusOK, util.CreateOkResponse(userDoc))
 }

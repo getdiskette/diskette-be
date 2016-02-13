@@ -105,7 +105,7 @@ Under heavy development.
     http localhost:5025/admin/get-users?q=<query> X-Diskette-Session-Token:<session_token>
     ```
 
-    - [ ] `CreateUser(email, password, language string) error`
+    - [ ] `CreateUser(email, password, roles []string, profile map[string]interface{}) error`
     - [ ] `ChangeUserPassword(userId, newPassword string) error`
     - [ ] `ChangeUserEmail(userId, newEmail string) error`
     - [ ] `SetUserRoles(userId, roles []string) error`
