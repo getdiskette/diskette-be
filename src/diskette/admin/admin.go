@@ -1,0 +1,19 @@
+package admin
+
+import (
+	"github.com/labstack/echo"
+	"labix.org/v2/mgo"
+)
+
+type Service interface {
+	GetUsers(c *echo.Context) error
+}
+
+type serviceImpl struct {
+	userCollection *mgo.Collection
+	jwtKey         []byte
+}
+
+func NewService(userCollection *mgo.Collection, jwtKey []byte) Service {
+	return &serviceImpl{userCollection, jwtKey}
+}
