@@ -1,4 +1,4 @@
-package user
+package session
 
 import (
 	"diskette/tokens"
@@ -10,7 +10,7 @@ import (
 	"labix.org/v2/mgo/bson"
 )
 
-// http POST localhost:5025/private/update-profile?st=<session_token> profile:='{"profession": "Software Developer"}'
+// http POST localhost:5025/session/update-profile?st=<session_token> profile:='{"profession": "Software Developer"}'
 func (service *serviceImpl) UpdateProfile(c *echo.Context) error {
 	sessionToken := c.Get("sessionToken").(tokens.SessionToken)
 

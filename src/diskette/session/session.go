@@ -1,4 +1,4 @@
-package user
+package session
 
 import (
 	"github.com/labstack/echo"
@@ -6,11 +6,10 @@ import (
 )
 
 type Service interface {
-	Signup(c *echo.Context) error
-	ConfirmSignup(c *echo.Context) error
-	Signin(c *echo.Context) error
-	ForgotPassword(c *echo.Context) error
-	ResetPassword(c *echo.Context) error
+	Signout(c *echo.Context) error
+	ChangePassword(c *echo.Context) error
+	ChangeEmail(c *echo.Context) error
+	UpdateProfile(c *echo.Context) error
 }
 
 type serviceImpl struct {

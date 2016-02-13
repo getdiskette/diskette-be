@@ -1,4 +1,4 @@
-package user
+package session
 
 import (
 	"diskette/tokens"
@@ -10,7 +10,7 @@ import (
 	"labix.org/v2/mgo/bson"
 )
 
-// http POST localhost:5025/private/signout?st=<session_token>
+// http POST localhost:5025/session/signout?st=<session_token>
 func (service *serviceImpl) Signout(c *echo.Context) error {
 	sessionToken := c.Get("sessionToken").(tokens.SessionToken)
 

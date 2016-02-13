@@ -10,6 +10,7 @@ import (
 	"diskette/collections"
 	"diskette/middleware"
 	"diskette/rest"
+	"diskette/session"
 	"diskette/user"
 
 	"github.com/labstack/echo"
@@ -48,12 +49,13 @@ func main() {
 	userGroup.Post("/forgot-password", userService.ForgotPassword)
 	userGroup.Post("/reset-password", userService.ResetPassword)
 
+	sessionService := session.NewService(userCollection, jwtKey)
 	sessionMiddleware := middleware.CreateSessionMiddleware(userCollection, jwtKey)
-	privateGroup := e.Group("/private", sessionMiddleware)
-	privateGroup.Post("/signout", userService.Signout)
-	privateGroup.Post("/change-password", userService.ChangePassword)
-	privateGroup.Post("/change-email", userService.ChangeEmail)
-	privateGroup.Post("/update-profile", userService.UpdateProfile)
+	sessionGroup := e.Group("/session", sessionMiddleware)
+	sessionGroup.Post("/signout", sessionService.Signout)
+	sessionGroup.Post("/change-password", sessionService.ChangePassword)
+	sessionGroup.Post("/change-email", sessionService.ChangeEmail)
+	sessionGroup.Post("/update-profile", sessionService.UpdateProfile)
 
 	adminService := admin.NewService(userCollection, jwtKey)
 	adminSessionMiddleware := middleware.CreateAdminSessionMiddleware(userCollection, jwtKey)

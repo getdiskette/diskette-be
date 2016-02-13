@@ -73,27 +73,27 @@ Under heavy development.
 
     - [x] sign out
     ```bash
-    http POST localhost:5025/user/signout \
+    http POST localhost:5025/session/signout \
         X-Diskette-Session-Token:<session_token>
     ```
 
     - [x] change password
     ```bash
-    http POST localhost:5025/private/change-password \
+    http POST localhost:5025/session/change-password \
         X-Diskette-Session-Token:<session_token> \
         oldPassword=<old_password> newPassword=<new_password>
     ```
 
     - [x] change email
     ```bash
-    http POST localhost:5025/private/change-email \
+    http POST localhost:5025/session/change-email \
         X-Diskette-Session-Token:<session_token> \
         password=<password> newEmail=<newEmail>
     ```
 
     - [x] update profile
     ```bash
-    http POST localhost:5025/private/update-profile \
+    http POST localhost:5025/session/update-profile \
         X-Diskette-Session-Token:<session_token> \
         profile:='{"name": "Joe Doe"}'
     ```

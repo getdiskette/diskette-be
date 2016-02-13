@@ -1,4 +1,4 @@
-package user
+package session
 
 import (
 	"diskette/collections"
@@ -13,7 +13,7 @@ import (
 	"labix.org/v2/mgo/bson"
 )
 
-// http POST localhost:5025/private/change-password?st=<session_token> oldPassword=<old_password> newPassword=<new_password>
+// http POST localhost:5025/session/change-password?st=<session_token> oldPassword=<old_password> newPassword=<new_password>
 func (service *serviceImpl) ChangePassword(c *echo.Context) error {
 	sessionToken := c.Get("sessionToken").(tokens.SessionToken)
 	userDoc := c.Get("userDoc").(collections.UserDocument)
