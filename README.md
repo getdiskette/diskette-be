@@ -105,7 +105,13 @@ Under heavy development.
     http localhost:5025/admin/get-users?q=<query> X-Diskette-Session-Token:<session_token>
     ```
 
-    - [ ] `CreateUser(email, password, roles []string, profile map[string]interface{}) error`
+    - [x] create user
+    ```bash
+    http POST localhost:5025/admin/create-user X-Diskette-Session-Token:<session_token> \
+        email="joe.doe@gmail.com" password="123" \
+        roles:='["admin"]' profile:='{"name": "Joe Doe", "lang": "en"}'
+    ```
+
     - [ ] `ChangeUserPassword(userId, newPassword string) error`
     - [ ] `ChangeUserEmail(userId, newEmail string) error`
     - [ ] `SetUserRoles(userId, roles []string) error`

@@ -61,7 +61,7 @@ func main() {
 	adminSessionMiddleware := middleware.CreateAdminSessionMiddleware(userCollection, jwtKey)
 	adminGroup := e.Group("/admin", adminSessionMiddleware)
 	adminGroup.Get("/get-users", adminService.GetUsers)
-	adminGroup.Get("/create-user", adminService.CreateUser)
+	adminGroup.Post("/create-user", adminService.CreateUser)
 
 	fmt.Println("Listening at http://localhost:5025")
 	e.Run(":5025")
