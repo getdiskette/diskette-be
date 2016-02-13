@@ -43,7 +43,9 @@ Under heavy development.
     - [x] sign up
     ```bash
     # example
-    http POST localhost:5025/user/signup name="Joe Doe" email=joe.doe@gmail.com password=abc language=en
+    http POST localhost:5025/user/signup \
+        email=joe.doe@gmail.com password=abc \
+        profile:='{"name": "Joe Doe", "language": "en" }'
     ```
 
     - [x] confirm sign up
