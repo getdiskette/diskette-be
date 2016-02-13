@@ -8,26 +8,21 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/satori/go.uuid"
+	"diskette/vendor/github.com/satori/go.uuid"
 
 	"github.com/labstack/echo"
 	"golang.org/x/crypto/bcrypt"
 	"labix.org/v2/mgo/bson"
 )
 
-// http POST localhost:5025/user/signup name="Joe Doe" email=joe.doe@gmail.com password=abc language=en
+// http POST localhost:5025/user/signup email=joe.doe@gmail.com password=abc profile:='{"name": "Joe Doe", "language": "en" }'
 func (service *serviceImpl) Signup(c *echo.Context) error {
 	var request struct {
-		Name     string `json:"name"`
-		Email    string `json:"email"`
-		Password string `json:"password"`
-		Language string `json:"language"`
+		Email    string                 `json:"email"`
+		Password string                 `json:"password"`
+		Profile  map[string]interface{} `json:"profile"`
 	}
 	c.Bind(&request)
-
-	if request.Name == "" {
-		return c.JSON(http.StatusBadRequest, util.CreateErrResponse(errors.New("Missing parameter 'name'")))
-	}
 
 	if request.Email == "" {
 		return c.JSON(http.StatusBadRequest, util.CreateErrResponse(errors.New("Missing parameter 'email'")))
@@ -37,14 +32,14 @@ func (service *serviceImpl) Signup(c *echo.Context) error {
 		return c.JSON(http.StatusBadRequest, util.CreateErrResponse(errors.New("Missing parameter 'password'")))
 	}
 
-	if request.Language == "" {
-		return c.JSON(http.StatusBadRequest, util.CreateErrResponse(errors.New("Missing parameter 'language'")))
+	if request.Profile == nil {
+		return c.JSON(http.StatusBadRequest, util.CreateErrResponse(errors.New("Missing parameter 'profile'")))
 	}
 
-	return service.createUser(c, request.Name, request.Email, request.Password, request.Language, false)
+	return service.createUser(c, request.Email, request.Password, request.Profile, false)
 }
 
-func (service *serviceImpl) createUser(c *echo.Context, name, email, password, language string, isConfirmed bool) error {
+func (service *serviceImpl) createUser(c *echo.Context, email, password string, profile map[string]interface{}, isConfirmed bool) error {
 	count, err := service.userCollection.Find(bson.M{"email": email}).Count()
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, util.CreateErrResponse(err))
@@ -61,10 +56,9 @@ func (service *serviceImpl) createUser(c *echo.Context, name, email, password, l
 
 	userDoc := collections.UserDocument{
 		Id:          bson.NewObjectId(),
-		Name:        name,
 		Email:       email,
 		HashedPass:  hashedPass,
-		Language:    language,
+		Profile:     profile,
 		CreatedAt:   time.Now(),
 		IsSuspended: false,
 	}

@@ -10,10 +10,8 @@ const UserCollectionName = "user"
 
 type UserDocument struct {
 	Id               bson.ObjectId          `bson:"_id"`
-	Name             string                 `bson:"name"`
 	Email            string                 `bson:"email"`
 	HashedPass       []byte                 `bson:"hashedPass"`
-	Language         string                 `bson:"language"`
 	Roles            []string               `bson:"roles"`
 	CreatedAt        time.Time              `bson:"createdAt"`
 	ConfirmationKey  string                 `bson:"confirmationKey"`

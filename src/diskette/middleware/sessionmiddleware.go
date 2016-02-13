@@ -8,8 +8,6 @@ import (
 	"errors"
 	"net/http"
 
-	"log"
-
 	"github.com/labstack/echo"
 	"labix.org/v2/mgo"
 	"labix.org/v2/mgo/bson"
@@ -38,10 +36,6 @@ func CreateSessionMiddleware(userCollection *mgo.Collection, jwtKey []byte) echo
 			c.JSON(http.StatusUnauthorized, util.CreateErrResponse(err))
 			return err
 		}
-
-		log.Print("---")
-		log.Printf("sessionToken %+v", sessionToken)
-		log.Printf("userDoc %+v", userDoc)
 
 		c.Set("sessionToken", sessionToken)
 		c.Set("userDoc", userDoc)
