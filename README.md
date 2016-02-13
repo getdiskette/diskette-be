@@ -99,7 +99,12 @@ Under heavy development.
     ```
 
 - [ ] User Management
-    - [ ] `GetUsers() ([]User, error)`
+
+    - [x] get users
+    ```bash
+    http localhost:5025/admin/get-users?q=<query> X-Diskette-Session-Token:<session_token>
+    ```
+
     - [ ] `CreateUser(email, password, language string) error`
     - [ ] `ChangeUserPassword(userId, newPassword string) error`
     - [ ] `ChangeUserEmail(userId, newEmail string) error`
