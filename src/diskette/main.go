@@ -55,7 +55,7 @@ func main() {
 	sessionGroup.Post("/signout", sessionService.Signout)
 	sessionGroup.Post("/change-password", sessionService.ChangePassword)
 	sessionGroup.Post("/change-email", sessionService.ChangeEmail)
-	sessionGroup.Post("/update-profile", sessionService.UpdateProfile)
+	sessionGroup.Post("/set-profile", sessionService.SetProfile)
 
 	adminService := admin.NewService(userCollection, jwtKey)
 	adminSessionMiddleware := middleware.CreateAdminSessionMiddleware(userCollection, jwtKey)

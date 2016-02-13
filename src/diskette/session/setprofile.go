@@ -10,8 +10,8 @@ import (
 	"labix.org/v2/mgo/bson"
 )
 
-// http POST localhost:5025/session/update-profile?st=<session_token> profile:='{"profession": "Software Developer"}'
-func (service *serviceImpl) UpdateProfile(c *echo.Context) error {
+// http POST localhost:5025/session/set-profile?st=<session_token> profile:='{"profession": "Software Developer"}'
+func (service *serviceImpl) SetProfile(c *echo.Context) error {
 	sessionToken := c.Get("sessionToken").(tokens.SessionToken)
 
 	var request struct {

@@ -91,9 +91,9 @@ Under heavy development.
         password=<password> newEmail=<newEmail>
     ```
 
-    - [x] update profile
+    - [x] set profile
     ```bash
-    http POST localhost:5025/session/update-profile \
+    http POST localhost:5025/session/set-profile \
         X-Diskette-Session-Token:<session_token> \
         profile:='{"name": "Joe Doe"}'
     ```
@@ -108,7 +108,8 @@ Under heavy development.
     - [ ] `CreateUser(email, password, language string) error`
     - [ ] `ChangeUserPassword(userId, newPassword string) error`
     - [ ] `ChangeUserEmail(userId, newEmail string) error`
-    - [ ] `UpdateUserProfile(userId, profile map[string]interface{}) error`
+    - [ ] `SetUserRoles(userId, roles []string) error`
+    - [ ] `SetUserProfile(userId, profile map[string]interface{}) error`
     - [ ] `RemoveUsers(userIds ...string) error`
     - [ ] `Signout(userIds ...string) error`
     - [ ] `SuspendUsers(userIds ...string) error`
