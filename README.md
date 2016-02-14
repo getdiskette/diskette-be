@@ -130,7 +130,13 @@ Under heavy development.
         userId=<user_id> newRoles:='["customer"]'
     ```
 
-    - [ ] `SetUserProfile(userId, profile map[string]interface{}) error`
+    - [x] set user profile
+    ```bash
+    # example
+    http POST localhost:5025/admin/set-user-profile X-Diskette-Session-Token:<session_token> \
+        userId=<user_id> newProfile:='{"name": "Joe Doe Jr."}'
+    ```
+
     - [ ] `RemoveUsers(userIds ...string) error`
     - [ ] `Signout(userIds ...string) error`
     - [ ] `SuspendUsers(userIds ...string) error`
