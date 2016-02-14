@@ -10,8 +10,8 @@ import (
 	"labix.org/v2/mgo/bson"
 )
 
-// http POST localhost:5025/admin/change-user-roles userId=<user_id> newRoles:='["admin"]' X-Diskette-Session-Token:<session_token>
-func (service *serviceImpl) ChangeUserRoles(c *echo.Context) error {
+// http POST localhost:5025/admin/set-user-roles userId=<user_id> newRoles:='["admin"]' X-Diskette-Session-Token:<session_token>
+func (service *serviceImpl) SetUserRoles(c *echo.Context) error {
 	var request struct {
 		UserId   string   `json:"userId"`
 		NewRoles []string `json:"newRoles"`

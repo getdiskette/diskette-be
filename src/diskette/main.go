@@ -64,7 +64,7 @@ func main() {
 	adminGroup.Post("/create-user", adminService.CreateUser)
 	adminGroup.Post("/change-user-password", adminService.ChangeUserPassword)
 	adminGroup.Post("/change-user-email", adminService.ChangeUserEmail)
-	adminGroup.Post("/change-user-roles", adminService.ChangeUserRoles)
+	adminGroup.Post("/set-user-roles", adminService.SetUserRoles)
 
 	fmt.Println("Listening at http://localhost:5025")
 	e.Run(":5025")
