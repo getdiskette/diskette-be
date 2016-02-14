@@ -8,6 +8,7 @@ import (
 type Service interface {
 	GetUsers(c *echo.Context) error
 	CreateUser(c *echo.Context) error
+	ChangeUserPassword(c *echo.Context) error
 }
 
 type serviceImpl struct {

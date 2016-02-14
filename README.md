@@ -112,7 +112,11 @@ Under heavy development.
         roles:='["admin"]' profile:='{"name": "Joe Doe", "lang": "en"}'
     ```
 
-    - [ ] `ChangeUserPassword(userId, newPassword string) error`
+    - [x] `ChangeUserPassword(userId, newPassword string) error`
+    ```bash
+    http POST localhost:5025/admin/change-user-password X-Diskette-Session-Token:<session_token> \
+        userId=<user_id> newPassword=<new_password>
+    ```
     - [ ] `ChangeUserEmail(userId, newEmail string) error`
     - [ ] `SetUserRoles(userId, roles []string) error`
     - [ ] `SetUserProfile(userId, profile map[string]interface{}) error`

@@ -62,6 +62,7 @@ func main() {
 	adminGroup := e.Group("/admin", adminSessionMiddleware)
 	adminGroup.Get("/get-users", adminService.GetUsers)
 	adminGroup.Post("/create-user", adminService.CreateUser)
+	adminGroup.Post("/change-user-password", adminService.ChangeUserPassword)
 
 	fmt.Println("Listening at http://localhost:5025")
 	e.Run(":5025")
