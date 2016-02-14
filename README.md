@@ -123,7 +123,13 @@ Under heavy development.
         userId=<user_id> newEmail=<new_email>
     ```
 
-    - [ ] `SetUserRoles(userId, roles []string) error`
+    - [x] set user roles
+    ```bash
+    # example
+    http POST localhost:5025/admin/set-user-roles X-Diskette-Session-Token:<session_token> \
+        userId=<user_id> newRoles:='["customer"]'
+    ```
+
     - [ ] `SetUserProfile(userId, profile map[string]interface{}) error`
     - [ ] `RemoveUsers(userIds ...string) error`
     - [ ] `Signout(userIds ...string) error`
