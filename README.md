@@ -117,7 +117,12 @@ Under heavy development.
     http POST localhost:5025/admin/change-user-password X-Diskette-Session-Token:<session_token> \
         userId=<user_id> newPassword=<new_password>
     ```
-    - [ ] `ChangeUserEmail(userId, newEmail string) error`
+    - [x] change user email
+    ```bash
+    http POST localhost:5025/admin/change-user-email X-Diskette-Session-Token:<session_token> \
+        userId=<user_id> newEmail=<new_email>
+    ```
+
     - [ ] `SetUserRoles(userId, roles []string) error`
     - [ ] `SetUserProfile(userId, profile map[string]interface{}) error`
     - [ ] `RemoveUsers(userIds ...string) error`
