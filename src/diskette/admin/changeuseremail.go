@@ -46,5 +46,5 @@ func (service *serviceImpl) ChangeUserEmail(c *echo.Context) error {
 		return c.JSON(http.StatusInternalServerError, util.CreateErrResponse(err))
 	}
 
-	return c.JSON(http.StatusOK, util.CreateOkResponse(userDoc))
+	return c.JSON(http.StatusOK, util.CreateOkResponse(nil))
 }
