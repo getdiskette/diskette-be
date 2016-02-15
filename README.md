@@ -137,7 +137,13 @@ Under heavy development.
         userId=<user_id> newProfile:='{"name": "Joe Doe Jr."}'
     ```
 
-    - [ ] `RemoveUsers(userIds ...string) error`
+    - [x] remove users
+    ```bash
+    # example
+    http DELETE localhost:5025/admin/remove-users X-Diskette-Session-Token:<session_token> \
+        userIds:='["56bf19d65a1d18b704000001", "56be731d5a1d18accd000001"]'
+    ```
+    
     - [ ] `Signout(userIds ...string) error`
     - [ ] `SuspendUsers(userIds ...string) error`
     - [ ] `UnsuspendUsers(userIds ...string) error`
