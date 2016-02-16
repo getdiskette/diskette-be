@@ -143,8 +143,14 @@ Under heavy development.
     http DELETE localhost:5025/admin/remove-users X-Diskette-Session-Token:<session_token> \
         userIds:='["56bf19d65a1d18b704000001", "56be731d5a1d18accd000001"]'
     ```
-    
-    - [ ] `Signout(userIds ...string) error`
+
+    - [ ] signout users
+    ```bash
+    # example
+    http POST localhost:5025/admin/signout-users X-Diskette-Session-Token:<session_token> \
+        userIds:='["56bf19d65a1d18b704000001", "56be731d5a1d18accd000001"]'
+    ```
+
     - [ ] `SuspendUsers(userIds ...string) error`
     - [ ] `UnsuspendUsers(userIds ...string) error`
     - [ ] `RemoveUnconfirmedUsers() error`
