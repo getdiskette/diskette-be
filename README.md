@@ -144,7 +144,7 @@ Under heavy development.
         userIds:='["56bf19d65a1d18b704000001", "56be731d5a1d18accd000001"]'
     ```
 
-    - [ ] signout users
+    - [x] signout users
     ```bash
     # example
     http POST localhost:5025/admin/signout-users X-Diskette-Session-Token:<session_token> \
