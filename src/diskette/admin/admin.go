@@ -13,6 +13,7 @@ type Service interface {
 	SetUserRoles(c *echo.Context) error
 	SetUserProfile(c *echo.Context) error
 	RemoveUsers(c *echo.Context) error
+	SignoutUsers(c *echo.Context) error
 }
 
 type serviceImpl struct {
