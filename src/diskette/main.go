@@ -68,6 +68,7 @@ func main() {
 	adminGroup.Post("/set-user-profile", adminService.SetUserProfile)
 	adminGroup.Delete("/remove-users", adminService.RemoveUsers)
 	adminGroup.Post("/signout-users", adminService.SignoutUsers)
+	adminGroup.Post("/suspend-users", adminService.SuspendUsers)
 
 	fmt.Println("Listening at http://localhost:5025")
 	e.Run(":5025")
