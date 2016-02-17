@@ -15,6 +15,7 @@ type Service interface {
 	RemoveUsers(c *echo.Context) error
 	SignoutUsers(c *echo.Context) error
 	SuspendUsers(c *echo.Context) error
+	UnsuspendUsers(c *echo.Context) error
 }
 
 type serviceImpl struct {
