@@ -158,7 +158,13 @@ Under heavy development.
         userIds:='["56bf19d65a1d18b704000001", "56be731d5a1d18accd000001"]'
     ```
 
-    - [ ] `UnsuspendUsers(userIds ...string) error`
+    - [x] unsuspend users
+    ```bash
+    # example
+    http POST localhost:5025/admin/unsuspend-users X-Diskette-Session-Token:<session_token> \
+        userIds:='["56bf19d65a1d18b704000001", "56be731d5a1d18accd000001"]'
+    ```
+
     - [ ] `RemoveUnconfirmedUsers() error`
     - [ ] `RemoveExpiredResetKeys() error`
 
