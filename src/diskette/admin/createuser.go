@@ -32,7 +32,7 @@ func (service *serviceImpl) CreateUser(c *echo.Context) error {
 	}
 
 	if request.Roles == nil {
-		return c.JSON(http.StatusBadRequest, util.CreateErrResponse(errors.New("Missing parameter 'password'")))
+		return c.JSON(http.StatusBadRequest, util.CreateErrResponse(errors.New("Missing parameter 'roles'")))
 	}
 
 	if request.Profile == nil {
