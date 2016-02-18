@@ -165,7 +165,11 @@ Under heavy development.
         userIds:='["56bf19d65a1d18b704000001", "56be731d5a1d18accd000001"]'
     ```
 
-    - [ ] `RemoveUnconfirmedUsers() error`
+    - [x] remove unfonfirmed users
+    ```bash
+    http DELETE localhost:5025/admin/remove-unconfirmed-users X-Diskette-Session-Token:<session_token>
+    ```
+    
     - [ ] `RemoveExpiredResetKeys() error`
 
 - [ ] Authorization
