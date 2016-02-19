@@ -170,7 +170,10 @@ Under heavy development.
     http DELETE localhost:5025/admin/remove-unconfirmed-users X-Diskette-Session-Token:<session_token>
     ```
 
-    - [ ] `RemoveExpiredResetKeys() error`
+    - [x] remove expired reset keys
+    ```bash
+    http POST localhost:5025/admin/remove-expired-reset-keys X-Diskette-Session-Token:<session_token>
+    ```
 
 - [ ] Authorization
     - [ ] Document level access control
