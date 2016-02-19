@@ -10,17 +10,23 @@
 		}
 	},
 	"mail": {
-		"templates": {
-			"en": {
-				"confirmSignup": "./templates/user/confirmSignup.en.txt",
-				"resetPassword": "./templates/user/resetPassword.en.txt"
-			}
+		"confirmSignup": {
+			"template": {
+				"en": "./templates/user/confirmSignup.en.txt"
+			},
+			"collection": "user"
 		},
-		"smtp": {
-			"host": "smtp.mailgun.org",
-			"port": 587,
-			"email": "postmaster@mysandbox.mailgun.org",
-			"password": "mypassword"
+		"resetPassword": {
+			"template": {
+				"en": "./templates/user/resetPassword.en.txt"
+			},
+			"collection": "user"
 		}
+	},
+	"smtp": {
+		"host": "smtp.mailgun.org",
+		"port": 587,
+		"email": "postmaster@mysandbox.mailgun.org",
+		"password": "mypassword"
 	}
 }

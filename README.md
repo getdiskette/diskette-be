@@ -190,8 +190,23 @@ Under heavy development.
     ```
 
 - [ ] Mail Notifications:
-    - [ ] onSignup
-    - [ ] onResetPassword
+
+    - [ ] send mail
+    ```bash
+    http POST localhost:5025/sendmail/<key>?q=<query>&l=<language_tag>
+    ```
+
+    - [ ] confirm signup
+    ```bash
+    # example
+    http POST localhost:5025/sendmail/confirmSignup?q='{"email":"joe.doe@gmail.com"}'&l="en"
+    ```
+
+    - [ ] reset password
+    ```bash
+    # example
+    http POST localhost:5025/sendmail/resetPassword?q='{"email":"joe.doe@gmail.com"}'&l="en"
+    ```
 
 - [ ] Javascript library for usage in the browser
 
