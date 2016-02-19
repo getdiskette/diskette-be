@@ -23,8 +23,7 @@ func (service *serviceImpl) RemoveUnconfirmedUsers(c *echo.Context) error {
 	var userDoc collections.UserDocument
 	for iter.Next(&userDoc) {
 		isAccountOld := userDoc.CreatedAt.Before(time.Now().Add(-1 * d))
-		isAccountConfirmed := userDoc.ConfirmedAt.After(userDoc.CreatedAt)
-		if isAccountOld && !isAccountConfirmed {
+		if isAccountOld && !userDoc.IsConfirmed {
 			objectIds = append(objectIds, userDoc.Id)
 		}
 	}

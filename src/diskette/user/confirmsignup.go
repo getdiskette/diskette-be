@@ -4,7 +4,6 @@ import (
 	"diskette/util"
 	"errors"
 	"net/http"
-	"time"
 
 	"diskette/tokens"
 
@@ -32,7 +31,7 @@ func (service *serviceImpl) ConfirmSignup(c *echo.Context) error {
 		bson.M{"confirmationKey": token.Key},
 		bson.M{
 			"$set": bson.M{
-				"confirmedAt": time.Now(),
+				"isConfirmed": true,
 			},
 		},
 	)

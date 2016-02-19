@@ -15,7 +15,7 @@ type UserDocument struct {
 	Roles            []string               `bson:"roles"`
 	CreatedAt        time.Time              `bson:"createdAt"`
 	ConfirmationKey  string                 `bson:"confirmationKey"`
-	ConfirmedAt      time.Time              `bson:"confirmedAt"`
+	IsConfirmed      bool                   `bson:"isConfirmed"`
 	ResetKey         string                 `bson:"resetKey"`
 	RequestedResetAt time.Time              `bson:"requestedResetAt"`
 	IsSuspended      bool                   `bson:"isSuspended"`

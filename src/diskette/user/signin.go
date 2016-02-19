@@ -35,7 +35,7 @@ func (service *serviceImpl) Signin(c *echo.Context) error {
 		return c.JSON(http.StatusNotFound, util.CreateErrResponse(errors.New("The user doesn't exist.")))
 	}
 
-	if userDoc.ConfirmedAt.Before(userDoc.CreatedAt) {
+	if !userDoc.IsConfirmed {
 		return c.JSON(http.StatusUnauthorized, util.CreateErrResponse(errors.New("The user has not confirmed the account.")))
 	}
 

@@ -61,7 +61,7 @@ func (service *serviceImpl) CreateUser(c *echo.Context) error {
 		Profile:     request.Profile,
 		CreatedAt:   time.Now(),
 		IsSuspended: false,
-		ConfirmedAt: time.Now(),
+		IsConfirmed: true,
 	}
 
 	err = service.userCollection.Insert(userDoc)
