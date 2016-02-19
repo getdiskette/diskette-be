@@ -17,6 +17,7 @@ type Service interface {
 	SuspendUsers(c *echo.Context) error
 	UnsuspendUsers(c *echo.Context) error
 	RemoveUnconfirmedUsers(c *echo.Context) error
+	RemoveExpiredResetKeys(c *echo.Context) error
 }
 
 type serviceImpl struct {

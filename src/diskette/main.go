@@ -71,6 +71,7 @@ func main() {
 	adminGroup.Post("/suspend-users", adminService.SuspendUsers)
 	adminGroup.Post("/unsuspend-users", adminService.UnsuspendUsers)
 	adminGroup.Delete("/remove-unconfirmed-users", adminService.RemoveUnconfirmedUsers)
+	adminGroup.Post("/remove-expired-reset-keys", adminService.RemoveExpiredResetKeys)
 
 	fmt.Println("Listening at http://localhost:5025")
 	e.Run(":5025")
