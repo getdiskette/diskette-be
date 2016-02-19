@@ -98,7 +98,7 @@ Under heavy development.
         profile:='{"name": "Joe Doe"}'
     ```
 
-- [ ] User Management
+- [x] User Management
 
     - [x] get users
     ```bash

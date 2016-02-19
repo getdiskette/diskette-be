@@ -3,7 +3,7 @@
 	"jwtKey": "e3a6cfcf-fd98-4f91-b04b-5b4074e5fd90",
 	"authorization": {
 		"user": {
-			"read":   false,
+			"read": false,
 			"create": false,
 			"update": false,
 			"remove": false
@@ -11,9 +11,9 @@
 	},
 	"mail": {
 		"templates": {
-			"user": {
-				"createdAt": "./templates/user/onSignup.en.txt",
-				"requestedResetAt": "./templates/user/onResetPassword.en.txt"
+			"en": {
+				"confirmSignup": "./templates/user/confirmSignup.en.txt",
+				"resetPassword": "./templates/user/resetPassword.en.txt"
 			}
 		},
 		"smtp": {
