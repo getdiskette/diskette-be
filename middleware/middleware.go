@@ -1,9 +1,9 @@
 package middleware
 
 import (
-	"diskette/collections"
-	"diskette/tokens"
-	"diskette/util"
+	"github.com/getdiskette/diskette/collections"
+	"github.com/getdiskette/diskette/tokens"
+	"github.com/getdiskette/diskette/util"
 
 	"errors"
 	"net/http"

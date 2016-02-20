@@ -1,8 +1,8 @@
 package session
 
 import (
-	"diskette/tokens"
-	"diskette/util"
+	"github.com/getdiskette/diskette/tokens"
+	"github.com/getdiskette/diskette/util"
 	"errors"
 	"net/http"
 

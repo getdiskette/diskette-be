@@ -1,11 +1,11 @@
 package user
 
 import (
-	"diskette/util"
+	"github.com/getdiskette/diskette/util"
 	"errors"
 	"net/http"
 
-	"diskette/tokens"
+	"github.com/getdiskette/diskette/tokens"
 
 	"github.com/labstack/echo"
 	"labix.org/v2/mgo/bson"

@@ -1,7 +1,7 @@
 package rest
 
 import (
-	"diskette/util"
+	"github.com/getdiskette/diskette/util"
 	"encoding/json"
 	"errors"
 	"net/http"

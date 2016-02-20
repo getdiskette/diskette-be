@@ -1,7 +1,7 @@
 package admin
 
 import (
-	"diskette/util"
+	"github.com/getdiskette/diskette/util"
 	"encoding/json"
 	"net/http"
 

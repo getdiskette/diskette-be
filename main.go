@@ -6,12 +6,12 @@ import (
 	"io/ioutil"
 	"log"
 
-	"diskette/admin"
-	"diskette/collections"
-	"diskette/middleware"
-	"diskette/rest"
-	"diskette/session"
-	"diskette/user"
+	"github.com/getdiskette/diskette/admin"
+	"github.com/getdiskette/diskette/collections"
+	"github.com/getdiskette/diskette/middleware"
+	"github.com/getdiskette/diskette/rest"
+	"github.com/getdiskette/diskette/session"
+	"github.com/getdiskette/diskette/user"
 
 	"github.com/labstack/echo"
 	"labix.org/v2/mgo"

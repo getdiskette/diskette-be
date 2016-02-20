@@ -1,8 +1,8 @@
 package admin
 
 import (
-	"diskette/collections"
-	"diskette/util"
+	"github.com/getdiskette/diskette/collections"
+	"github.com/getdiskette/diskette/util"
 	"errors"
 	"net/http"
 
