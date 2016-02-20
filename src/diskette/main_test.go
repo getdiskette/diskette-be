@@ -7,5 +7,5 @@ import (
 )
 
 func TestSomething(t *testing.T) {
-	assert.True(t, true)
+	assert.False(t, false)
 }
