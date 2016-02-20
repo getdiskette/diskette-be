@@ -1,4 +1,4 @@
-[![Go Report Card](https://goreportcard.com/badge/github.com/getdiskette/diskette)](https://goreportcard.com/report/github.com/getdiskette/diskette)
+[![Go Report Card](https://goreportcard.com/badge/github.com/getdiskette/diskette)](https://goreportcard.com/report/github.com/getdiskette/diskette) [![Build Status](https://travis-ci.org/getdiskette/diskette.svg?branch=master)](https://travis-ci.org/getdiskette/diskette)
 
 # Diskette
 
