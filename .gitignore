@@ -1,6 +1,1 @@
-**.DS_Store
-**.swp
-/bin/
-/pkg/
-/src/**/vendor/
-/mongo/
+/vendor/
