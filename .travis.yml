@@ -2,10 +2,15 @@ language: go
 
 go:
     - 1.6
-    - tip
 
 install:
     - go get -t ./...
+
+services:
+  - mongodb
+
+before_script:
+    - go run main.go
 
 script:
     - go test -v .
