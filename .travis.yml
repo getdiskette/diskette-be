@@ -7,8 +7,10 @@ install:
     - go get -t ./...
 
 services:
-  - mongodb
-  - go run main.go
+    - mongodb
+
+before_script:
+    - go run main.go &
 
 script:
     - go test -v .
