@@ -36,7 +36,7 @@ func main() {
 	e := echo.New()
 
 	e.Get("/ping", func(c *echo.Context) error {
-		return c.JSON(http.StatusOK, "pong")
+		return c.String(http.StatusOK, "pong")
 	})
 
 	restService := rest.NewService(db)
