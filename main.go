@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"log"
+	"net/http"
 
 	"github.com/getdiskette/diskette/admin"
 	"github.com/getdiskette/diskette/collections"
@@ -33,6 +34,10 @@ func main() {
 	userCollection := db.C(collections.UserCollectionName)
 
 	e := echo.New()
+
+	e.Get("/ping", func(c *echo.Context) error {
+		return c.JSON(http.StatusOK, "pong")
+	})
 
 	restService := rest.NewService(db)
 	restGroup := e.Group("/collection")
