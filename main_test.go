@@ -8,11 +8,12 @@ import (
 	"github.com/verdverm/frisby"
 )
 
-func TestSomething(t *testing.T) {
+func TestPing(t *testing.T) {
 	errs := frisby.Create("Test ping").
 		Get("http://localhost:5025/ping").
 		Send().
 		ExpectStatus(http.StatusOK).
+		ExpectContent("pong").
 		Errors()
 
 	for _, err := range errs {
