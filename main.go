@@ -83,7 +83,7 @@ func start() {
 	adminGroup.Post("/remove-expired-reset-keys", adminService.RemoveExpiredResetKeys)
 
 	fmt.Println("Listening at http://localhost:5025")
-	e.Run(":5025")
+	go e.Run(":5025")
 }
 
 func readConfig() config {

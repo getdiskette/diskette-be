@@ -9,7 +9,7 @@ import (
 )
 
 func TestPing(t *testing.T) {
-	go start()
+	start()
 	// time.Sleep(1 * time.Millisecond)
 
 	errs := frisby.Create("Test ping").
