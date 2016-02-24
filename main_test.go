@@ -14,6 +14,10 @@ func TestPing(t *testing.T) {
 		Send().
 		ExpectStatus(http.StatusOK).
 		ExpectContent("pong").
+		AfterText(func(F *frisby.Frisby, text string, err error) {
+		assert.Nil(t, err)
+		assert.Equal(t, "pong", text)
+	}).
 		Errors()
 
 	for _, err := range errs {
