@@ -3,14 +3,15 @@ package main
 import (
 	"net/http"
 	"testing"
+	"time"
 
 	"github.com/stretchr/testify/assert"
 	"github.com/verdverm/frisby"
 )
 
 func TestPing(t *testing.T) {
-	start()
-	// time.Sleep(1 * time.Millisecond)
+	go start()
+	time.Sleep(1 * time.Second)
 
 	errs := frisby.Create("Test ping").
 		Get("http://localhost:5025/ping").
