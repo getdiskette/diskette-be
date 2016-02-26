@@ -1,0 +1,13 @@
+mode: set
+github.com/getdiskette/diskette/main.go:26.13,28.2 1 0
+github.com/getdiskette/diskette/main.go:30.14,42.45 8 1
+github.com/getdiskette/diskette/main.go:46.2,86.16 37 1
+github.com/getdiskette/diskette/main.go:42.45,44.3 1 1
+github.com/getdiskette/diskette/main.go:89.26,92.16 3 1
+github.com/getdiskette/diskette/main.go:95.2,95.54 1 1
+github.com/getdiskette/diskette/main.go:98.2,98.12 1 1
+github.com/getdiskette/diskette/main.go:92.16,94.3 1 0
+github.com/getdiskette/diskette/main.go:95.54,97.3 1 0
+github.com/getdiskette/diskette/main.go:101.40,103.16 2 1
+github.com/getdiskette/diskette/main.go:106.2,106.16 1 1
+github.com/getdiskette/diskette/main.go:103.16,105.3 1 0
