@@ -2,6 +2,7 @@ package main
 
 import (
 	"net/http"
+	"os"
 	"testing"
 	"time"
 
@@ -9,10 +10,19 @@ import (
 	"github.com/verdverm/frisby"
 )
 
-func TestPing(t *testing.T) {
+func TestMain(m *testing.M) {
+	setup()
+	retCode := m.Run()
+	// teardown()
+	os.Exit(retCode)
+}
+
+func setup() {
 	go start()
 	time.Sleep(1 * time.Second)
+}
 
+func TestPing(t *testing.T) {
 	errs := frisby.Create("Test ping").
 		Get("http://localhost:5025/ping").
 		Send().
