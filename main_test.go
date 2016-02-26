@@ -18,7 +18,7 @@ func TestMain(m *testing.M) {
 }
 
 func setup() {
-	go start()
+	go main()
 	time.Sleep(1 * time.Second)
 }
 

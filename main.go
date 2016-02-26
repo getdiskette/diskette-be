@@ -24,10 +24,6 @@ type config struct {
 }
 
 func main() {
-	start()
-}
-
-func start() {
 	cfg := readConfig()
 	jwtKey := []byte(cfg.JwtKey)
 
