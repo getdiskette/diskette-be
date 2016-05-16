@@ -1,20 +1,20 @@
 package user
 
 import (
+	"errors"
 	"github.com/getdiskette/diskette/collections"
 	"github.com/getdiskette/diskette/tokens"
 	"github.com/getdiskette/diskette/util"
-	"errors"
 	"net/http"
 	"time"
 
 	"github.com/labstack/echo"
 	"golang.org/x/crypto/bcrypt"
-	"labix.org/v2/mgo/bson"
+	"gopkg.in/mgo.v2/bson"
 )
 
 // http POST localhost:5025/user/signin email=joe.doe@gmail.com password=abc
-func (service *serviceImpl) Signin(c *echo.Context) error {
+func (service *serviceImpl) Signin(c echo.Context) error {
 	var request struct {
 		Email    string `json:"email"`
 		Password string `json:"password"`

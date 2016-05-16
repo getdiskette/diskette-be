@@ -1,17 +1,17 @@
 package session
 
 import (
+	"errors"
 	"github.com/getdiskette/diskette/tokens"
 	"github.com/getdiskette/diskette/util"
-	"errors"
 	"net/http"
 
 	"github.com/labstack/echo"
-	"labix.org/v2/mgo/bson"
+	"gopkg.in/mgo.v2/bson"
 )
 
 // http POST localhost:5025/session/set-profile?st=<session_token> profile:='{"profession": "Software Developer"}'
-func (service *serviceImpl) SetProfile(c *echo.Context) error {
+func (service *serviceImpl) SetProfile(c echo.Context) error {
 	sessionToken := c.Get("sessionToken").(tokens.SessionToken)
 
 	var request struct {

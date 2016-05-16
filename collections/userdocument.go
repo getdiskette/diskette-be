@@ -3,7 +3,7 @@ package collections
 import (
 	"time"
 
-	"labix.org/v2/mgo/bson"
+	"gopkg.in/mgo.v2/bson"
 )
 
 const UserCollectionName = "user"

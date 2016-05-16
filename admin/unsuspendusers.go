@@ -1,16 +1,16 @@
 package admin
 
 import (
-	"github.com/getdiskette/diskette/util"
 	"errors"
+	"github.com/getdiskette/diskette/util"
 	"net/http"
 
 	"github.com/labstack/echo"
-	"labix.org/v2/mgo/bson"
+	"gopkg.in/mgo.v2/bson"
 )
 
 // http POST localhost:5025/admin/unsuspend-users userIds:='["56bf19d65a1d18b704000001", "56be731d5a1d18accd000001"]' X-Diskette-Session-Token:<session_token>
-func (service *serviceImpl) UnsuspendUsers(c *echo.Context) error {
+func (service *serviceImpl) UnsuspendUsers(c echo.Context) error {
 	var request struct {
 		UserIds []string `json:"userIds"`
 	}

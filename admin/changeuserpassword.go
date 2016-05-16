@@ -1,19 +1,19 @@
 package admin
 
 import (
+	"errors"
 	"github.com/getdiskette/diskette/collections"
 	"github.com/getdiskette/diskette/util"
-	"errors"
 	"net/http"
 
 	"golang.org/x/crypto/bcrypt"
-	"labix.org/v2/mgo/bson"
+	"gopkg.in/mgo.v2/bson"
 
 	"github.com/labstack/echo"
 )
 
 // http POST localhost:5025/admin/change-user-password userId=<user_id> newPassword="123" X-Diskette-Session-Token:<session_token>
-func (service *serviceImpl) ChangeUserPassword(c *echo.Context) error {
+func (service *serviceImpl) ChangeUserPassword(c echo.Context) error {
 	var request struct {
 		UserId      string `json:"userId"`
 		NewPassword string `json:"newPassword"`

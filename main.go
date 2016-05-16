@@ -6,6 +6,7 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+	"time"
 
 	"github.com/getdiskette/diskette/admin"
 	"github.com/getdiskette/diskette/collections"
@@ -15,7 +16,9 @@ import (
 	"github.com/getdiskette/diskette/user"
 
 	"github.com/labstack/echo"
-	"labix.org/v2/mgo"
+	"github.com/labstack/echo/engine/standard"
+	"github.com/tylerb/graceful"
+	"gopkg.in/mgo.v2"
 )
 
 type config struct {
@@ -35,7 +38,7 @@ func main() {
 
 	e := echo.New()
 
-	e.Get("/ping", func(c *echo.Context) error {
+	e.Get("/ping", func(c echo.Context) error {
 		return c.String(http.StatusOK, "pong")
 	})
 
@@ -79,7 +82,9 @@ func main() {
 	adminGroup.Post("/remove-expired-reset-keys", adminService.RemoveExpiredResetKeys)
 
 	fmt.Println("Listening at http://localhost:5025")
-	e.Run(":5025")
+	std := standard.New(":5025")
+	std.SetHandler(e)
+	graceful.ListenAndServe(std.Server, 5*time.Second)
 }
 
 func readConfig() config {
@@ -97,7 +102,7 @@ func readConfig() config {
 func createMongoSession() *mgo.Session {
 	session, err := mgo.Dial("127.0.0.1")
 	if err != nil {
-		log.Fatal(err)
+		log.Fatalf("Could not connect to mongo db session: %s", err)
 	}
 	return session
 }

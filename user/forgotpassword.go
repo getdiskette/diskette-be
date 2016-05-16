@@ -1,20 +1,20 @@
 package user
 
 import (
+	"errors"
 	"github.com/getdiskette/diskette/tokens"
 	"github.com/getdiskette/diskette/util"
-	"errors"
 	"net/http"
 	"time"
 
 	"github.com/satori/go.uuid"
 
 	"github.com/labstack/echo"
-	"labix.org/v2/mgo/bson"
+	"gopkg.in/mgo.v2/bson"
 )
 
 // http POST localhost:5025/user/forgot-password email=joe.doe@gmail.com
-func (service *serviceImpl) ForgotPassword(c *echo.Context) error {
+func (service *serviceImpl) ForgotPassword(c echo.Context) error {
 	var request struct {
 		Email string `json:"email"`
 	}

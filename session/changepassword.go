@@ -1,20 +1,20 @@
 package session
 
 import (
+	"errors"
 	"github.com/getdiskette/diskette/collections"
 	"github.com/getdiskette/diskette/tokens"
 	"github.com/getdiskette/diskette/util"
-	"errors"
 	"net/http"
 
 	"golang.org/x/crypto/bcrypt"
 
 	"github.com/labstack/echo"
-	"labix.org/v2/mgo/bson"
+	"gopkg.in/mgo.v2/bson"
 )
 
 // http POST localhost:5025/session/change-password?st=<session_token> oldPassword=<old_password> newPassword=<new_password>
-func (service *serviceImpl) ChangePassword(c *echo.Context) error {
+func (service *serviceImpl) ChangePassword(c echo.Context) error {
 	sessionToken := c.Get("sessionToken").(tokens.SessionToken)
 	userDoc := c.Get("userDoc").(collections.UserDocument)
 
