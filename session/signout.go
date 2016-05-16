@@ -7,11 +7,11 @@ import (
 	"time"
 
 	"github.com/labstack/echo"
-	"labix.org/v2/mgo/bson"
+	"gopkg.in/mgo.v2/bson"
 )
 
 // http POST localhost:5025/session/signout?st=<session_token>
-func (service *serviceImpl) Signout(c *echo.Context) error {
+func (service *serviceImpl) Signout(c echo.Context) error {
 	sessionToken := c.Get("sessionToken").(tokens.SessionToken)
 
 	err := service.userCollection.UpdateId(

@@ -2,14 +2,14 @@ package session
 
 import (
 	"github.com/labstack/echo"
-	"labix.org/v2/mgo"
+	"gopkg.in/mgo.v2"
 )
 
 type Service interface {
-	Signout(c *echo.Context) error
-	ChangePassword(c *echo.Context) error
-	ChangeEmail(c *echo.Context) error
-	SetProfile(c *echo.Context) error
+	Signout(c echo.Context) error
+	ChangePassword(c echo.Context) error
+	ChangeEmail(c echo.Context) error
+	SetProfile(c echo.Context) error
 }
 
 type serviceImpl struct {

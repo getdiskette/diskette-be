@@ -1,9 +1,9 @@
 package rest
 
 import (
-	"github.com/getdiskette/diskette/util"
 	"encoding/json"
 	"errors"
+	"github.com/getdiskette/diskette/util"
 	"net/http"
 
 	"github.com/labstack/echo"
@@ -11,10 +11,10 @@ import (
 
 // examples:
 // http PUT localhost:5025/collection/user?q='{"name":"dfreire"}' \$set:='{"name":"dariofreire"}'
-func (service *serviceImpl) Put(c *echo.Context) error {
+func (service *serviceImpl) Put(c echo.Context) error {
 	collection := c.Param("collection")
 
-	queryStr := c.Query("q")
+	queryStr := c.QueryParam("q")
 	if queryStr == "" {
 
 		return c.JSON(http.StatusForbidden, util.CreateErrResponse(errors.New("Missing parameter 'q' (for query)")))

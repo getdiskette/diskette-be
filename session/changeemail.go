@@ -1,20 +1,20 @@
 package session
 
 import (
+	"errors"
 	"github.com/getdiskette/diskette/collections"
 	"github.com/getdiskette/diskette/tokens"
 	"github.com/getdiskette/diskette/util"
-	"errors"
 	"net/http"
 
 	"golang.org/x/crypto/bcrypt"
 
 	"github.com/labstack/echo"
-	"labix.org/v2/mgo/bson"
+	"gopkg.in/mgo.v2/bson"
 )
 
 // http POST localhost:5025/session/change-email?st=<session_token> password=<password> newEmail=<newEmail>
-func (service *serviceImpl) ChangeEmail(c *echo.Context) error {
+func (service *serviceImpl) ChangeEmail(c echo.Context) error {
 	sessionToken := c.Get("sessionToken").(tokens.SessionToken)
 	userDoc := c.Get("userDoc").(collections.UserDocument)
 

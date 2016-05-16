@@ -1,20 +1,20 @@
 package admin
 
 import (
+	"errors"
 	"github.com/getdiskette/diskette/collections"
 	"github.com/getdiskette/diskette/util"
-	"errors"
 	"net/http"
 	"time"
 
 	"golang.org/x/crypto/bcrypt"
-	"labix.org/v2/mgo/bson"
+	"gopkg.in/mgo.v2/bson"
 
 	"github.com/labstack/echo"
 )
 
 // http POST localhost:5025/admin/create-user email="joe.doe@gmail.com" password="123" roles:='["admin"]' profile:='{"name": "Joe Doe", "lang": "en"}' X-Diskette-Session-Token:<session_token>
-func (service *serviceImpl) CreateUser(c *echo.Context) error {
+func (service *serviceImpl) CreateUser(c echo.Context) error {
 	var request struct {
 		Email    string                 `json:"email"`
 		Password string                 `json:"password"`

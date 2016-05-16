@@ -2,14 +2,14 @@ package rest
 
 import (
 	"github.com/labstack/echo"
-	"labix.org/v2/mgo"
+	"gopkg.in/mgo.v2"
 )
 
 type Service interface {
-	Get(c *echo.Context) error
-	Post(c *echo.Context) error
-	Put(c *echo.Context) error
-	Delete(c *echo.Context) error
+	Get(c echo.Context) error
+	Post(c echo.Context) error
+	Put(c echo.Context) error
+	Delete(c echo.Context) error
 }
 
 type serviceImpl struct {

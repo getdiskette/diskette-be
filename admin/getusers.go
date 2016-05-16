@@ -1,17 +1,17 @@
 package admin
 
 import (
-	"github.com/getdiskette/diskette/util"
 	"encoding/json"
+	"github.com/getdiskette/diskette/util"
 	"net/http"
 
 	"github.com/labstack/echo"
 )
 
 // http localhost:5025/admin/get-users?q=<query> X-Diskette-Session-Token:<session_token>
-func (service *serviceImpl) GetUsers(c *echo.Context) error {
+func (service *serviceImpl) GetUsers(c echo.Context) error {
 	var query map[string]interface{}
-	queryStr := c.Query("q")
+	queryStr := c.QueryParam("q")
 	if queryStr != "" {
 		if err := json.Unmarshal([]byte(queryStr), &query); err != nil {
 			return c.JSON(http.StatusInternalServerError, util.CreateErrResponse(err))

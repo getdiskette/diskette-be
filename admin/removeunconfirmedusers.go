@@ -7,11 +7,11 @@ import (
 	"time"
 
 	"github.com/labstack/echo"
-	"labix.org/v2/mgo/bson"
+	"gopkg.in/mgo.v2/bson"
 )
 
 // http DELETE localhost:5025/admin/remove-unconfirmed-users X-Diskette-Session-Token:<session_token>
-func (service *serviceImpl) RemoveUnconfirmedUsers(c *echo.Context) error {
+func (service *serviceImpl) RemoveUnconfirmedUsers(c echo.Context) error {
 
 	d, err := time.ParseDuration("12h")
 	if err != nil {

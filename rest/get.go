@@ -1,8 +1,8 @@
 package rest
 
 import (
-	"github.com/getdiskette/diskette/util"
 	"encoding/json"
+	"github.com/getdiskette/diskette/util"
 	"net/http"
 
 	"github.com/labstack/echo"
@@ -12,11 +12,11 @@ import (
 // http localhost:5025/collection/user
 // http localhost:5025/collection/user?q='{"name":"dfreire"}'
 // http localhost:5025/collection/user?q='{"name":{"$ne":"dfreire"}}'
-func (service *serviceImpl) Get(c *echo.Context) error {
+func (service *serviceImpl) Get(c echo.Context) error {
 	collection := c.Param("collection")
 
 	var query map[string]interface{}
-	queryStr := c.Query("q")
+	queryStr := c.QueryParam("q")
 	if queryStr != "" {
 		if err := json.Unmarshal([]byte(queryStr), &query); err != nil {
 			return c.JSON(http.StatusInternalServerError, util.CreateErrResponse(err))

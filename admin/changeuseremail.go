@@ -1,17 +1,17 @@
 package admin
 
 import (
+	"errors"
 	"github.com/getdiskette/diskette/collections"
 	"github.com/getdiskette/diskette/util"
-	"errors"
 	"net/http"
 
 	"github.com/labstack/echo"
-	"labix.org/v2/mgo/bson"
+	"gopkg.in/mgo.v2/bson"
 )
 
 // http POST localhost:5025/admin/change-user-email userId=<user_id> newEmail=<new_email> X-Diskette-Session-Token:<session_token>
-func (service *serviceImpl) ChangeUserEmail(c *echo.Context) error {
+func (service *serviceImpl) ChangeUserEmail(c echo.Context) error {
 	var request struct {
 		UserId   string `json:"userId"`
 		NewEmail string `json:"newEmail"`

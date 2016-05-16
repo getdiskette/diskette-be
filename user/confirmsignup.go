@@ -1,18 +1,18 @@
 package user
 
 import (
-	"github.com/getdiskette/diskette/util"
 	"errors"
+	"github.com/getdiskette/diskette/util"
 	"net/http"
 
 	"github.com/getdiskette/diskette/tokens"
 
 	"github.com/labstack/echo"
-	"labix.org/v2/mgo/bson"
+	"gopkg.in/mgo.v2/bson"
 )
 
 // http POST localhost:5025/user/confirm token=<confirmation_token>
-func (service *serviceImpl) ConfirmSignup(c *echo.Context) error {
+func (service *serviceImpl) ConfirmSignup(c echo.Context) error {
 	var request struct {
 		Token string `json:"token"`
 	}

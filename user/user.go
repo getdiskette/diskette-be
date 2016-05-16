@@ -2,15 +2,15 @@ package user
 
 import (
 	"github.com/labstack/echo"
-	"labix.org/v2/mgo"
+	"gopkg.in/mgo.v2"
 )
 
 type Service interface {
-	Signup(c *echo.Context) error
-	ConfirmSignup(c *echo.Context) error
-	Signin(c *echo.Context) error
-	ForgotPassword(c *echo.Context) error
-	ResetPassword(c *echo.Context) error
+	Signup(c echo.Context) error
+	ConfirmSignup(c echo.Context) error
+	Signin(c echo.Context) error
+	ForgotPassword(c echo.Context) error
+	ResetPassword(c echo.Context) error
 }
 
 type serviceImpl struct {

@@ -2,22 +2,22 @@ package admin
 
 import (
 	"github.com/labstack/echo"
-	"labix.org/v2/mgo"
+	"gopkg.in/mgo.v2"
 )
 
 type Service interface {
-	GetUsers(c *echo.Context) error
-	CreateUser(c *echo.Context) error
-	ChangeUserPassword(c *echo.Context) error
-	ChangeUserEmail(c *echo.Context) error
-	SetUserRoles(c *echo.Context) error
-	SetUserProfile(c *echo.Context) error
-	RemoveUsers(c *echo.Context) error
-	SignoutUsers(c *echo.Context) error
-	SuspendUsers(c *echo.Context) error
-	UnsuspendUsers(c *echo.Context) error
-	RemoveUnconfirmedUsers(c *echo.Context) error
-	RemoveExpiredResetKeys(c *echo.Context) error
+	GetUsers(c echo.Context) error
+	CreateUser(c echo.Context) error
+	ChangeUserPassword(c echo.Context) error
+	ChangeUserEmail(c echo.Context) error
+	SetUserRoles(c echo.Context) error
+	SetUserProfile(c echo.Context) error
+	RemoveUsers(c echo.Context) error
+	SignoutUsers(c echo.Context) error
+	SuspendUsers(c echo.Context) error
+	UnsuspendUsers(c echo.Context) error
+	RemoveUnconfirmedUsers(c echo.Context) error
+	RemoveExpiredResetKeys(c echo.Context) error
 }
 
 type serviceImpl struct {
