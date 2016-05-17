@@ -2,6 +2,8 @@
 
 # Diskette
 
+[![Join the chat at https://gitter.im/getdiskette/diskette](https://badges.gitter.im/getdiskette/diskette.svg)](https://gitter.im/getdiskette/diskette?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 MongoDB + REST API + Authentication + Authorization + Mail Notifications
 
 ## Status
